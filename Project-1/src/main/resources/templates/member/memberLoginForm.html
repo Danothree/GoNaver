@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<body>
+    <div layout:fragment="content">
+        <div class="login-table">
+            <div>로그인</div>
+            <table>
+                <tr>
+                    <td>
+                        <label>ID :</label>
+                        <input type="text" placeholder="아이디를 입력하세요" size="20" maxlength="10">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>PW :</label>
+                        <input type="password" placeholder="비밀번호를 입력하세요" size="20" maxlength="10">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" value="로그인">
+                        <input type="button" value="회원가입">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
