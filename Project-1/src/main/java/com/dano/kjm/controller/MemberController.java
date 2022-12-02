@@ -20,4 +20,6 @@ public class MemberController {
     public String NewForm() {
         return "member/memberForm";
     }
+
+
 }

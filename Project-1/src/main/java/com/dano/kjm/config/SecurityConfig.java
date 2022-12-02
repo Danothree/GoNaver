@@ -1,22 +1,28 @@
 package com.dano.kjm.config;
 
+import com.dano.kjm.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-public class SecurityConfiguration {
+@EnableWebSecurity
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final MemberRepository memberRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return null;
+        return new UserDetailsServiceImpl(memberRepository);
     }
 
     @Bean
@@ -26,8 +32,17 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers().authenticated();
+        http.csrf().disable()
+                .formLogin()
+                .loginPage("/members/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/")
+                .failureUrl("/");
 
+        http.authorizeRequests()
+                .antMatchers("/", "/members/login", "/members/new").permitAll()
+                .anyRequest().authenticated();
         return http.build();
     }
 
