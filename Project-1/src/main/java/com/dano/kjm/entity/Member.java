@@ -34,8 +34,12 @@ public class Member extends BaseTimeEntity {
         String password = encoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
         member.setPhone(memberFormDto.getPhone());
-        member.setAddress(memberFormDto.getAddress());
-        member.setRole(memberFormDto.getRole());
+        member.setAddress(new Address(memberFormDto.getCity(), memberFormDto.getStreet(), memberFormDto.getPostalCode()));
+        if("SELLER".equals(memberFormDto.getRole())) {
+            member.setRole(Role.SELLER);
+        } else {
+            member.setRole(Role.CONSUMER);
+        }
         return member;
     }
 

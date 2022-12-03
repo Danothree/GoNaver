@@ -38,10 +38,10 @@ public class SecurityConfig {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/")
-                .failureUrl("/");
+                .failureUrl("/member/login/error");
 
         http.authorizeRequests()
-                .antMatchers("/", "/members/login", "/members/new").permitAll()
+                .antMatchers("/", "/members/login", "/members").permitAll()
                 .anyRequest().authenticated();
         return http.build();
     }
@@ -60,6 +60,7 @@ public class SecurityConfig {
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

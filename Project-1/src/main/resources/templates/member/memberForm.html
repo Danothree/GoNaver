@@ -3,49 +3,80 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <body>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(() => {
+           let errorMessage = [[${errorMessage}]];
+           if(errorMessage != null) {
+               alert(errorMessage);
+           }
+        });
+    </script>
+</th:block>
 <div layout:fragment="content">
     <div class="login-table">
-        <div>sign in</div>
-        <table>
-            <tr>
-                <td>
-                    <label>Email :</label>
-                    <input type="text" id="email" placeholder="이메일을 입력하세요" size="20" maxlength="10">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>PW :</label>
-                    <input type="password" id="password" placeholder="비밀번호를 입력하세요" size="20" maxlength="10">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Phone Number :</label>
-                    <input type="text" id="phone" placeholder="전화번호를 입력하세요" size="20" maxlength="10">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Address :</label>
-                    <input type="text" id="address" placeholder="주소를 입력하세요" size="20" maxlength="40">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>sell</label>
-                    <input type="checkbox" id="seller" value="sell">
-                    <label>buy</label>
-                    <input type="checkbox" id="consumer" value="buy">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="button" value="등록">
-                    <input type="button" value="취소">
-                </td>
-            </tr>
-        </table>
+        <div>sign up</div>
+        <form method="post" th:action="@{/members}" th:object="${memberFormDto}">
+            <table>
+                <tr>
+                    <td>
+                        <label>Email :</label>
+                        <input type="text" id="email" name="email" th:field="*{email}" placeholder="이메일을 입력하세요" size="20" maxlength="30">
+                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>PW :</label>
+                        <input type="password" id="password" name="password" th:field="*{password}" placeholder="비밀번호를 입력하세요" size="20" maxlength="30">
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Phone Number :</label>
+                        <input type="text" id="phone" name="phone" th:field="*{phone}" placeholder="전화번호를 입력하세요" size="20" maxlength="10">
+                        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>City :</label>
+                        <input type="text" id="city" name="city" th:field="*{city}" placeholder="시를 입력하세요" size="20" maxlength="20">
+                        <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Street :</label>
+                        <input type="text" id="street" name="street" th:field="*{street}" placeholder="도로명을 입력하세요" size="20" maxlength="20">
+                        <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>PostalCode :</label>
+                        <input type="text" id="postalCode" name="postalCode" th:field="*{postalCode}" placeholder="우편번호를 입력하세요" size="20" maxlength="20">
+                        <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>sell</label>
+                        <input type="radio" id="seller" name="role" th:field="*{role}" value="SELLER">
+                        <label>buy</label>
+                        <input type="radio" id="consumer" name="role" th:field="*{role}" value="CONSUMER">
+                        <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="등록">
+                        <input type="button" value="취소">
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </div>
 </body>

@@ -23,6 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .security
                 .core
                 .userdetails
-                .User(member.getEmail(), member.getPassword(), member.getRole());
+                .User(member.getEmail(), member.getPassword(), null);
     }
 }

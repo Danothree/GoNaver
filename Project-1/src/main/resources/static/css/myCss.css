@@ -10,5 +10,8 @@
 }
 .login-table table {
     margin-top: 60px;
-    margin-left: 35%;
+    margin-left: 40%;
+}
+.fieldError {
+    color: #bd2130;
 }
