@@ -1,10 +1,13 @@
 package com.dano.kjm.service;
 
+import com.dano.kjm.constant.Role;
 import com.dano.kjm.dto.MemberDto;
 import com.dano.kjm.dto.MemberFormDto;
+import com.dano.kjm.entity.Authority;
 import com.dano.kjm.entity.Member;
 import com.dano.kjm.exception.DuplicatedException;
 import com.dano.kjm.exception.UserNotFoundException;
+import com.dano.kjm.repository.AuthorityRepository;
 import com.dano.kjm.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +21,8 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+    private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -25,6 +30,12 @@ public class MemberService {
         DuplicatedCheck(memberFormDto.getEmail());
         Member member = Member.createMember(memberFormDto, passwordEncoder);
         memberRepository.save(member);
+        if("SELLER".equals(memberFormDto.getRole())) {
+            authorityRepository.save(Authority.setRoleAndMember(Role.SELLER, member));
+        } else {
+            authorityRepository.save(Authority.setRoleAndMember(Role.CONSUMER, member));
+        }
+
     }
 
     public void DuplicatedCheck(String email) {

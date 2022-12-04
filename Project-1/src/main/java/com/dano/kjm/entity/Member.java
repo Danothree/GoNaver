@@ -1,32 +1,32 @@
 package com.dano.kjm.entity;
 
 import com.dano.kjm.constant.Role;
-import com.dano.kjm.dto.MemberDto;
 import com.dano.kjm.dto.MemberFormDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @EqualsAndHashCode
 public class Member extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
     private String email;
     private String password;
     private String phone;
-
     @Embedded
     private Address address;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Authority> authorityList = new ArrayList<>();
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder encoder) {
         Member member = new Member();
@@ -35,11 +35,6 @@ public class Member extends BaseTimeEntity {
         member.setPassword(password);
         member.setPhone(memberFormDto.getPhone());
         member.setAddress(new Address(memberFormDto.getCity(), memberFormDto.getStreet(), memberFormDto.getPostalCode()));
-        if("SELLER".equals(memberFormDto.getRole())) {
-            member.setRole(Role.SELLER);
-        } else {
-            member.setRole(Role.CONSUMER);
-        }
         return member;
     }
 
@@ -59,7 +54,8 @@ public class Member extends BaseTimeEntity {
         this.address = address;
     }
 
-    private void setRole(Role role) {
-        this.role = role;
+    public void addAuthorityList(Authority authority) {
+        this.authorityList.add(authority);
     }
+
 }
