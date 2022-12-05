@@ -35,6 +35,8 @@ public class Member extends BaseTimeEntity {
         member.setPassword(password);
         member.setPhone(memberFormDto.getPhone());
         member.setAddress(new Address(memberFormDto.getCity(), memberFormDto.getStreet(), memberFormDto.getPostalCode()));
+        Authority authority = Authority.setRoleAndMember(Role.CONSUMER, member);
+        member.addAuthorityList(authority);
         return member;
     }
 

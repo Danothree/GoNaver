@@ -63,15 +63,6 @@
                 </tr>
                 <tr>
                     <td>
-                        <label>sell</label>
-                        <input type="radio" id="seller" name="role" th:field="*{role}" value="SELLER">
-                        <label>buy</label>
-                        <input type="radio" id="consumer" name="role" th:field="*{role}" value="CONSUMER">
-                        <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="fieldError">empty</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <input type="submit" value="등록">
                         <input type="button" value="취소">
                     </td>

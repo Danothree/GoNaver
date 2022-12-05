@@ -30,12 +30,7 @@ public class MemberService {
         DuplicatedCheck(memberFormDto.getEmail());
         Member member = Member.createMember(memberFormDto, passwordEncoder);
         memberRepository.save(member);
-        if("SELLER".equals(memberFormDto.getRole())) {
-            authorityRepository.save(Authority.setRoleAndMember(Role.SELLER, member));
-        } else {
-            authorityRepository.save(Authority.setRoleAndMember(Role.CONSUMER, member));
-        }
-
+        authorityRepository.saveAll(member.getAuthorityList());
     }
 
     public void DuplicatedCheck(String email) {
