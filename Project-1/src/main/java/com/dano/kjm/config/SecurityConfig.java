@@ -41,7 +41,8 @@ public class SecurityConfig {
                 .failureUrl("/member/login/error");
 
         http.authorizeRequests()
-                .antMatchers("/", "/members/login", "/members").permitAll()
+                .mvcMatchers("/", "/members/login", "/members").permitAll()
+                .antMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated();
         return http.build();
     }

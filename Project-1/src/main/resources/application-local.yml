@@ -1,0 +1,41 @@
+server:
+  port: 8088
+
+
+
+#spring security
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 'jdbc:mysql://localhost:4406/gonaver?serverTimezone=UTC'
+    username: 'root'
+    password: 'root'
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: false
+    show-sql: true
+    database: mysql
+    database-platform: 'org.hibernate.dialect.MySQL5InnoDBDialect'
+    properties:
+      hibernate:
+#        format_sql: true
+  main:
+    allow-bean-definition-overriding: true
+
+
+#logging
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: info
+        type:
+          descriptor:
+            sql: trace
