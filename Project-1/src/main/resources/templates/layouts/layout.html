@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -58,9 +59,10 @@
         <span><a href="/">home</a></span>
     </div>
     <div class="top-login">
-        <span><a href="/members">sign up</a></span>
-        <span><a href="/members/login">sign in</a></span>
-        <span onclick="logout();">logout</span>
+        <span><a href="/members" sec:authorize="isAnonymous()">sign up</a></span>
+        <span><a href="/members/login" sec:authorize="isAnonymous()">sign in</a></span>
+        <span><a href="/members" sec:authorize="isAuthenticated()">setting</a></span>
+        <span><a href="/logout" sec:authorize="isAuthenticated()">logout</a></span>
     </div>
     <div layout:fragment="content" class="content">
 

@@ -4,6 +4,8 @@ import com.dano.kjm.dto.MemberFormDto;
 import com.dano.kjm.exception.DuplicatedException;
 import com.dano.kjm.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +33,12 @@ public class MemberController {
 
     @GetMapping
     public String signUp(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = ((UserDetails)principal).getUsername();
+        if (email != null) {
+          model.addAttribute("memberFormDto", memberService.findMember(email));
+          return "member/memberForm";
+        }
         model.addAttribute("memberFormDto", new MemberFormDto());
         return "member/memberForm";
     }
@@ -53,6 +61,13 @@ public class MemberController {
 
     @PatchMapping
     public String update(@Valid MemberFormDto memberFormDto, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "member/memberForm";
+        }
+
+        memberService.updateMember(memberFormDto);
+
         return "redirect:/";
     }
 

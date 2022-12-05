@@ -41,6 +41,11 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
                 .failureUrl("/member/login/error");
 
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+
         http.authorizeRequests()
                 .mvcMatchers("/", "/members/login", "/members").permitAll()
                 .antMatchers("/manager/**").hasRole("MANAGER")

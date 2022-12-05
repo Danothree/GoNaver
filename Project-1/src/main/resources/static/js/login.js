@@ -1,10 +1,11 @@
-function login() {
-    alert("로그인~");
-}
-
-function newMember() {
-    alert("새 멤버~");
-}
-function logout() {
-    alert("로그아웃이다");
+function memberUpdate() {
+    const options = {
+        method : "patch",
+        headers : {
+            "Content-Type":"application/json"
+        },
+        data : FormData
+    };
+    fetch('/members',options)
+        .then(() => {alert("수정완료")});
 }

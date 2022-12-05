@@ -41,9 +41,17 @@ public class MemberService {
         }
     }
 
-    @Transactional
-    public void updateMember(MemberDto memberDto) {
+    public MemberFormDto findMember(String email) {
+        Member member = memberRepository.findByEmail(email).orElse(null);
+        MemberFormDto memberFormDto = new MemberFormDto();
+        memberFormDto.createMemberFormDto(member);
+        return memberFormDto;
+    }
 
+    @Transactional
+    public void updateMember(MemberFormDto memberFormDto) {
+        Member member = memberRepository.findByEmail(memberFormDto.getEmail()).orElse(null);
+        member.updateMember(memberFormDto, passwordEncoder);
     }
 
     @Transactional

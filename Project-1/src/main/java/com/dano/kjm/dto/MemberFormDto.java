@@ -2,6 +2,7 @@ package com.dano.kjm.dto;
 
 import com.dano.kjm.constant.Role;
 import com.dano.kjm.entity.Address;
+import com.dano.kjm.entity.Member;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -35,4 +36,14 @@ public class MemberFormDto {
 
     @NotEmpty(message = "주소를 입력하세요.")
     private String postalCode;
+
+    public MemberFormDto createMemberFormDto(Member member) {
+        this.email = member.getEmail();
+        this.password = member.getPassword();
+        this.phone = member.getPhone();
+        this.city = member.getAddress().getCity();
+        this.street = member.getAddress().getStreet();
+        this.postalCode = member.getAddress().getPostalCode();
+        return this;
+    }
 }
