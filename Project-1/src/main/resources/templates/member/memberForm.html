@@ -17,8 +17,9 @@
 
 <div layout:fragment="content">
     <div class="login-table">
-        <div>sign up</div>
-        <form method="post" th:action="@{/members}" th:object="${memberFormDto}">
+        <div sec:authorize="isAnonymous()">sign up</div>
+        <div sec:authorize="isAuthenticated()">update</div>
+        <form method="post" id='memberForm' th:action="@{/members}" th:object="${memberFormDto}">
             <table>
                 <tr>
                     <td>
@@ -66,6 +67,7 @@
                     <td>
                         <input type="submit" value="등록" sec:authorize="isAnonymous()">
                         <input type="button" value="수정" sec:authorize="isAuthenticated()" onclick="memberUpdate()">
+                        <input type="button" value="탈퇴" sec:authorize="isAuthenticated()" onclick="memberDelete(document.getElementById('email').value)">
                         <input type="button" value="취소">
                     </td>
                 </tr>

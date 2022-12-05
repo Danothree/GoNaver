@@ -34,13 +34,14 @@ public class MemberController {
     @GetMapping
     public String signUp(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = ((UserDetails)principal).getUsername();
-        if (email != null) {
-          model.addAttribute("memberFormDto", memberService.findMember(email));
-          return "member/memberForm";
+        if ("anonymousUser".equals(principal)) {
+            model.addAttribute("memberFormDto", new MemberFormDto());
+            return "member/memberForm";
+        } else {
+            String email = ((UserDetails)principal).getUsername();
+            model.addAttribute("memberFormDto", memberService.findMember(email));
+            return "member/memberForm";
         }
-        model.addAttribute("memberFormDto", new MemberFormDto());
-        return "member/memberForm";
     }
 
     @PostMapping
@@ -60,19 +61,14 @@ public class MemberController {
     }
 
     @PatchMapping
-    public String update(@Valid MemberFormDto memberFormDto, BindingResult bindingResult) {
-
-        if(bindingResult.hasErrors()) {
-            return "member/memberForm";
-        }
+    public void update(@Valid @RequestBody MemberFormDto memberFormDto) {
 
         memberService.updateMember(memberFormDto);
-
-        return "redirect:/";
     }
 
     @DeleteMapping
-    public String delete(Long memberId) {
+    public String delete(@RequestParam String email) {
+        memberService.deleteMember(email);
         return "redirect:/";
     }
 
