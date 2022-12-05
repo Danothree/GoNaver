@@ -1,0 +1,86 @@
+server:
+  port: 8088
+
+
+
+#spring security
+
+spring:
+  config:
+    activate:
+      on-profile: local
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 'jdbc:mysql://localhost:4406/gonaver?serverTimezone=UTC'
+    username: 'root'
+    password: 'root'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false
+    show-sql: true
+    database: mysql
+    database-platform: 'org.hibernate.dialect.MySQL5InnoDBDialect'
+    properties:
+      hibernate:
+#        format_sql: true
+  main:
+    allow-bean-definition-overriding: true
+
+
+#logging
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: info
+        type:
+          descriptor:
+            sql: trace
+
+
+
+---
+
+server:
+  port: 8088
+
+
+
+#spring security
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: 'jdbc:h2:tcp://localhost/~/test'
+    username: 'sa'
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    show-sql: true
+    database: h2
+    database-platform: 'org.hibernate.dialect.H2Dialect'
+    properties:
+      hibernate:
+        dialect: 'org.hibernate.dialect.H2Dialect'
+
+#logging
+logging:
+  level:
+    org:
+      hibernate: info

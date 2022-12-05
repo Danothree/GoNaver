@@ -24,7 +24,7 @@
 		speed: 300,
 		arrows: false,
 		adaptiveHeight: true,
-		
+
 		slidesToShow: 2,
 		slidesToScroll: 1,
 		responsive: [
@@ -48,7 +48,7 @@
 			}
 		]
 	});
-	
+
 	animatedProgressBar();
 	windowHieght();
 	previewPannel();
@@ -112,17 +112,17 @@
 			$(".preview-wrapper").toggleClass("extend");
 			return false;
 		});
-		if ($(window).width() < 768 ) {            
+		if ($(window).width() < 768 ) {
 			//$(".preview-wrapper").removeClass("extend");
 		}
-		$(".color-options li").on("click", function(){			
+		$(".color-options li").on("click", function(){
 			$("#color-changer").attr({
-				"href":"css/colors/"+$(this).attr("data-color")+".css"
+				"href":"/css/colors/"+$(this).attr("data-color")+".css"
 			});
 			return false;
 		});
 	}
-	
+
 	$(window).on("load", function() {
 		isotopeMasonry();
 

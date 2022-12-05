@@ -110,7 +110,7 @@
 		}
 		$(".color-options li").on("click", function(){			
 			$("#color-changer").attr({
-				"href":"css/colors/"+$(this).attr("data-color")+".css"
+				"href":"/css/colors/"+$(this).attr("data-color")+".css"
 			});
 			return false;
 		});
