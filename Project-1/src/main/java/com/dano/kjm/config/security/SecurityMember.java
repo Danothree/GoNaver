@@ -10,45 +10,45 @@ import java.util.List;
 public class SecurityMember implements UserDetails {
 
     private final Member member;
-    private final List<GrantedAuthority> authorityList;
+    private final List<GrantedAuthority> authorities;
 
-    public SecurityMember(Member member, List<GrantedAuthority> authorityList) {
+    public SecurityMember(Member member, List<GrantedAuthority> authorities) {
         this.member = member;
-        this.authorityList = authorityList;
+        this.authorities = authorities;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return member.getEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

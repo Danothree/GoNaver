@@ -53,9 +53,9 @@ public class MemberService {
 
     @Transactional
     public void deleteMember(String email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> {
-            throw new UserNotFoundException("존재하지 않는 이메일입니다");
-        });
-        memberRepository.delete(member);
+//        Member member = memberRepository.findByEmail(email).orElseThrow(() -> {
+//            throw new UserNotFoundException("존재하지 않는 이메일입니다");
+//        });
+//        memberRepository.delete(member);
     }
 }

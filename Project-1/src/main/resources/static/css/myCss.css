@@ -1,3 +1,9 @@
+.top-home {
+    position: fixed;
+    text-align: left;
+    font-size:20px;
+    padding-left: 10px;
+}
 .top-login {
     text-align: right;
 }

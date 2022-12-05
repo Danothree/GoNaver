@@ -37,7 +37,8 @@ public class SecurityConfig {
                 .loginPage("/members/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .successForwardUrl("/members")
+//                .successForwardUrl("/")
+                .defaultSuccessUrl("/")
                 .failureUrl("/member/login/error");
 
         http.authorizeRequests()
