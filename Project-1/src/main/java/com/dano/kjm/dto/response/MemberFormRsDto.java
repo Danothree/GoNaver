@@ -26,9 +26,6 @@ public class MemberFormRsDto {
     @NotBlank(message = "폰 번호를 입력하세요.")
     private String phone;
 
-//    @NotEmpty(message = "판매자, 구매자 중 하나를 선택해주세요.")
-//    private String role;
-
     @NotEmpty(message = "주소를 입력하세요.")
     private String city;
 

@@ -19,7 +19,7 @@ const common = {
 
         Swal.fire(defaultOption);
     },
-    confirm : function(title, text) {
+    confirm : function(title, func) {
         const defaultOption = {
             icon : 'warning',
             title : title,
@@ -29,8 +29,12 @@ const common = {
             cancelButtonColor: '#d33',
             confirmButtonText: '확인',
             cancelButtonText: '취소',
-            reverseButtons : true
         }
-        Swal.fire(defaultOption);
+        Swal.fire(defaultOption)
+            .then(result => {
+                if(result.isConfirmed) {
+                    func();
+                }
+            });
     }
 }

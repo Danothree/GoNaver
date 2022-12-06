@@ -74,7 +74,7 @@
                     <td>
                         <input type="submit" value="등록" class="submit" sec:authorize="isAnonymous()">
                         <input type="button" value="수정" sec:authorize="isAuthenticated()" onclick="memberUpdate()">
-                        <input type="button" value="탈퇴" sec:authorize="isAuthenticated()" onclick="memberDelete(document.getElementById('email').value)">
+                        <input type="button" value="탈퇴" sec:authorize="isAuthenticated()" onclick="delConfirm(document.getElementById('email').value)">
                         <input type="button" value="취소">
                     </td>
                 </tr>

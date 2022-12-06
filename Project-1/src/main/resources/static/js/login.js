@@ -1,4 +1,4 @@
-function memberUpdate() {
+async function memberUpdate() {
     const formData = {
         email : document.getElementById('email').value,
         password : document.getElementById('password').value,
@@ -27,17 +27,16 @@ function memberUpdate() {
         body : JSON.stringify(formData),
         redirect : 'follow'
     };
-    fetch('/members',options)
-        .then((res) => {
-            if(res.redirected) {
-                common.showAlert('수정 완료!');
-                window.location.href=res.url;
-            }
-        });
-
+    const res = await fetch('/members',options);
+    if(res.redirected) {
+        common.showAlert('수정 완료!');
+        window.location.href=res.url;
+    }
 }
-
-function memberDelete(email) {
+function delConfirm(email) {
+    common.confirm('정말로 탈퇴하시겠습니까?',memberDelete(email));
+}
+async function memberDelete(email) {
     let data = new FormData();
     data.append('email', email);
     const options = {
@@ -45,15 +44,11 @@ function memberDelete(email) {
         body : data,
         redirect : 'follow'
     };
-    if(common.confirm("정말로 탈퇴하시겠습니까?", '탈퇴 완료')) {
-        fetch('/members',options)
-            .then((res) => {
-                if(res.redirected) {
-                    common.showAlert('탈퇴 완료!');
-                    window.location.href='/logout';
-                }
-            });
-    }
+    const res = await fetch('/members',options);
+    if(res.redirected) {
+        common.showAlert('탈퇴 완료!');
+        window.location.href='/logout';
+    };
 }
 
 function pwCheck() {
