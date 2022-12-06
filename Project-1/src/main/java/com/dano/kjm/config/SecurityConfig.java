@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
         http.authorizeRequests()
-                .mvcMatchers("/", "/members/login", "/members").permitAll()
+                .mvcMatchers("/", "/members/login", "/members", "/items").permitAll()
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated();
         return http.build();
