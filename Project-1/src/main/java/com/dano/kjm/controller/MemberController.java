@@ -4,6 +4,8 @@ import com.dano.kjm.dto.MemberFormDto;
 import com.dano.kjm.exception.DuplicatedException;
 import com.dano.kjm.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,8 +33,15 @@ public class MemberController {
 
     @GetMapping
     public String signUp(Model model) {
-        model.addAttribute("memberFormDto", new MemberFormDto());
-        return "member/memberForm";
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if ("anonymousUser".equals(principal)) {
+            model.addAttribute("memberFormDto", new MemberFormDto());
+            return "member/memberForm";
+        } else {
+            String email = ((UserDetails)principal).getUsername();
+            model.addAttribute("memberFormDto", memberService.findMember(email));
+            return "member/memberForm";
+        }
     }
 
     @PostMapping
@@ -52,13 +61,19 @@ public class MemberController {
     }
 
     @PatchMapping
-    public String update(@Valid MemberFormDto memberFormDto, BindingResult bindingResult) {
+    public String update(@Valid @RequestBody MemberFormDto memberFormDto) {
+        memberService.updateMember(memberFormDto);
         return "redirect:/";
     }
 
     @DeleteMapping
-    public String delete(Long memberId) {
+    public String delete(@RequestParam String email) {
+        memberService.deleteMember(email);
         return "redirect:/";
+    }
+
+    public boolean passwordCheck(String pw1, String pw2) {
+        return pw1 == pw2;
     }
 
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -22,16 +23,20 @@
     <meta name="theme-name" content="phantom" />
 
     <!-- Essential Stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i|Open+Sans:400,600,700,800">
-    <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/plugins/animate.css">
-    <link rel="stylesheet" href="/plugins/slick/slick.css">
-    <link rel="stylesheet" href="/plugins/slick/slick-theme.css">
-    <link rel="stylesheet" href="/plugins/themefisher-fonts/css/themefisher-fonts.min.css">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i|Open+Sans:400,600,700,800">
+    <link type="text/css" rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/plugins/animate.css">
+    <link type="text/css" rel="stylesheet" href="/plugins/slick/slick.css">
+    <link type="text/css" rel="stylesheet" href="/plugins/slick/slick-theme.css">
+    <link type="text/css" rel="stylesheet" href="/plugins/themefisher-fonts/css/themefisher-fonts.min.css">
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/myCss.css">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/css/myCss.css">
+
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
     <!-- Theme Stylesheet -->
     <link rel="stylesheet" href="#" id="color-changer">
@@ -40,14 +45,15 @@
     <link rel="icon" href="/images/favicon.png" type="image/x-icon">
 
     <!-- JS, Popper.js, and jQuery -->
-    <script src="/plugins/jquery-2.2.4.min.js"></script>
-    <script src="/plugins/bootstrap/bootstrap.min.js"></script>
-    <script src="/plugins/jquery.nicescroll.min.js"></script>
-    <script src="/plugins/isotope/isotope.pkgd.min.js"></script>
-    <script src="/plugins/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/plugins/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/plugins/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="/plugins/isotope/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/plugins/slick/slick.min.js"></script>
 
-    <script src="/js/script.js"></script>
-    <script src="/js/login.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
+    <script type="text/javascript" src="/js/login.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
 
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
@@ -58,9 +64,10 @@
         <span><a href="/">home</a></span>
     </div>
     <div class="top-login">
-        <span><a href="/members">sign up</a></span>
-        <span><a href="/members/login">sign in</a></span>
-        <span onclick="logout();">logout</span>
+        <span><a href="/members" sec:authorize="isAnonymous()">sign up</a></span>
+        <span><a href="/members/login" sec:authorize="isAnonymous()">sign in</a></span>
+        <span><a href="/members" sec:authorize="isAuthenticated()">setting</a></span>
+        <span><a href="/logout" sec:authorize="isAuthenticated()">logout</a></span>
     </div>
     <div layout:fragment="content" class="content">
 

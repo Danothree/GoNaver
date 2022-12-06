@@ -27,6 +27,7 @@ dependencies {
 	implementation 'mysql:mysql-connector-java'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.webjars.npm:sweetalert2:11.6.15'
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
