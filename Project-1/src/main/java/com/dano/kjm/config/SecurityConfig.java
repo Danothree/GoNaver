@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .antMatchers(
                         "/css/**","/js/**","/partials/**",
                         "/phantom-main/**","/plugins/**",
-                        "/screenshots/**","/scss/**"));
+                        "/screenshots/**","/scss/**","/i/**"));
     }
 
     @Bean

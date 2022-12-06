@@ -61,15 +61,19 @@ public class MemberController {
     }
 
     @PatchMapping
-    public void update(@Valid @RequestBody MemberFormDto memberFormDto) {
-
+    public String update(@Valid @RequestBody MemberFormDto memberFormDto) {
         memberService.updateMember(memberFormDto);
+        return "redirect:/";
     }
 
     @DeleteMapping
     public String delete(@RequestParam String email) {
         memberService.deleteMember(email);
         return "redirect:/";
+    }
+
+    public boolean passwordCheck(String pw1, String pw2) {
+        return pw1 == pw2;
     }
 
 }

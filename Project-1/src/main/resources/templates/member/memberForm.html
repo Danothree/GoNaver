@@ -6,11 +6,11 @@
 <body>
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-        $(document).ready(() => {
-           let errorMessage = [[${errorMessage}]];
-           if(errorMessage != null) {
-               alert(errorMessage);
-           }
+        document.addEventListener('DOMContentLoaded',() => {
+            let errorMessage = [[${errorMessage}]];
+            if(errorMessage != null) {
+                alert(errorMessage);
+            }
         });
     </script>
 </th:block>
@@ -19,7 +19,7 @@
     <div class="login-table">
         <div sec:authorize="isAnonymous()">sign up</div>
         <div sec:authorize="isAuthenticated()">update</div>
-        <form method="post" id='memberForm' th:action="@{/members}" th:object="${memberFormDto}">
+        <form method="post" id='memberForm' th:action="@{/members}" th:object="${memberFormDto}" onsubmit="return pwCheck();">
             <table>
                 <tr>
                     <td>
@@ -33,6 +33,13 @@
                         <label>PW :</label>
                         <input type="password" id="password" name="password" th:field="*{password}" placeholder="비밀번호를 입력하세요" size="20" maxlength="30">
                         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>PW Check:</label>
+                        <input type="password" id="passwordCheck" name="passwordCheck" th:field="*{passwordCheck}" placeholder="비밀번호 확인" size="20" maxlength="30">
+                        <p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}" class="fieldError">empty</p>
                     </td>
                 </tr>
                 <tr>
@@ -65,7 +72,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="등록" sec:authorize="isAnonymous()">
+                        <input type="submit" value="등록" class="submit" sec:authorize="isAnonymous()">
                         <input type="button" value="수정" sec:authorize="isAuthenticated()" onclick="memberUpdate()">
                         <input type="button" value="탈퇴" sec:authorize="isAuthenticated()" onclick="memberDelete(document.getElementById('email').value)">
                         <input type="button" value="취소">

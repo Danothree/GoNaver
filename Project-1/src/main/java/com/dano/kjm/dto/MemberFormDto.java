@@ -1,13 +1,10 @@
 package com.dano.kjm.dto;
 
-import com.dano.kjm.constant.Role;
-import com.dano.kjm.entity.Address;
 import com.dano.kjm.entity.Member;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
@@ -21,6 +18,10 @@ public class MemberFormDto {
     @NotBlank(message = "비밀번호를 입력하세요.")
     @Length(min = 8, max = 20, message = "비밀번호는 8~20자리 입니다.")
     private String password;
+
+    @NotBlank(message = "비밀번호를 입력하세요.")
+    @Length(min = 8, max = 20, message = "비밀번호는 8~20자리 입니다.")
+    private String passwordCheck;
 
     @NotBlank(message = "폰 번호를 입력하세요.")
     private String phone;
