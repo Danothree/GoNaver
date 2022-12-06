@@ -1,4 +1,4 @@
-package com.dano.kjm.dto;
+package com.dano.kjm.dto.request;
 
 import com.dano.kjm.entity.Member;
 import lombok.Data;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-public class MemberFormDto {
+public class MemberFormRqDto {
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식에 어긋납니다.")
@@ -38,7 +38,7 @@ public class MemberFormDto {
     @NotEmpty(message = "주소를 입력하세요.")
     private String postalCode;
 
-    public MemberFormDto createMemberFormDto(Member member) {
+    public MemberFormRqDto createMemberFormDto(Member member) {
         this.email = member.getEmail();
         this.password = member.getPassword();
         this.phone = member.getPhone();

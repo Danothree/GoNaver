@@ -2,16 +2,22 @@ function memberUpdate() {
     const formData = {
         email : document.getElementById('email').value,
         password : document.getElementById('password').value,
+        passwordCheck : document.getElementById('passwordCheck').value,
         phone : document.getElementById('phone').value,
         city : document.getElementById('city').value,
         street : document.getElementById('street').value,
         postalCode : document.getElementById('postalCode').value
     };
-    const check = common.nullCheck(formData,'email', 'password', 'phone', 'city', 'street', 'postalCode');
+    const check = common.nullCheck(formData,'email', 'password', 'passwordCheck', 'phone', 'city', 'street', 'postalCode');
     if(check) {
         common.showAlert('정보를 다 입력해주세요');
         return false;
     };
+
+    if(!pwCheck()) {
+        common.showAlert('비밀번호가 틀립니다.');
+        return false;
+    }
 
     const options = {
         method : 'PATCH',
@@ -24,7 +30,7 @@ function memberUpdate() {
     fetch('/members',options)
         .then((res) => {
             if(res.redirected) {
-                alert('수정 완료!');
+                common.showAlert('수정 완료!');
                 window.location.href=res.url;
             }
         });
@@ -39,11 +45,11 @@ function memberDelete(email) {
         body : data,
         redirect : 'follow'
     };
-    if(confirm("정말로 삭제하시겠습니까?")) {
+    if(common.confirm("정말로 탈퇴하시겠습니까?", '탈퇴 완료')) {
         fetch('/members',options)
             .then((res) => {
                 if(res.redirected) {
-                    common.showAlert('삭제 완료!');
+                    common.showAlert('탈퇴 완료!');
                     window.location.href='/logout';
                 }
             });

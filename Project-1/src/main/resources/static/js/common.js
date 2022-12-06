@@ -2,7 +2,7 @@ const common = {
     nullCheck : (data,...list) => {
         let result = false;
         for (let i = 0; i < list.length; i++) {
-            if(data[list[i]] == undefined) {
+            if(data[list[i]] == undefined || data[list[i]] == "") {
                 result = true;
             }
         }
@@ -19,25 +19,18 @@ const common = {
 
         Swal.fire(defaultOption);
     },
-    // confirm : function(title, option, fnProc, cancleProc) {
-    //     var defaultOption = {
-    //         icon : 'warning',
-    //         title : title,
-    //         text : '',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: '확인',
-    //         cancelButtonText: '취소',
-    //         heightAuto: false
-    //     }
-    //     var newObj = $.extend(defaultOption, typeof(option)=="undefined" ? {} : option);
-    //     swal.fire(newObj).then((result) => {
-    //         if(result.value) {
-    //             fnProc();
-    //         } else {
-    //             cancleProc();
-    //         }
-    //     });
-    // }
+    confirm : function(title, text) {
+        const defaultOption = {
+            icon : 'warning',
+            title : title,
+            text : '',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons : true
+        }
+        Swal.fire(defaultOption);
+    }
 }

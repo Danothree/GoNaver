@@ -19,7 +19,7 @@
     <div class="login-table">
         <div sec:authorize="isAnonymous()">sign up</div>
         <div sec:authorize="isAuthenticated()">update</div>
-        <form method="post" id='memberForm' th:action="@{/members}" th:object="${memberFormDto}" onsubmit="return pwCheck();">
+        <form method="post" id='memberForm' th:action="@{/members}" th:object="${memberFormRsDto}" onsubmit="return pwCheck();">
             <table>
                 <tr>
                     <td>
