@@ -4,6 +4,7 @@ import com.dano.kjm.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -54,12 +55,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring()
-                .antMatchers(
-                        "/css/**","/js/**","/partials/**",
-                        "/phantom-main/**","/plugins/**",
-                        "/screenshots/**","/scss/**","/i/**"));
+    @Order(0)
+    public SecurityFilterChain resources(HttpSecurity http) throws Exception{
+        http
+                .requestMatchers((matchers) -> matchers.mvcMatchers("/static/**"))
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
+                .requestCache().disable()
+                .securityContext().disable()
+                .sessionManagement().disable();
+        return http.build();
     }
 
     @Bean
