@@ -58,7 +58,10 @@ public class SecurityConfig {
     @Order(0)
     public SecurityFilterChain resources(HttpSecurity http) throws Exception{
         http
-                .requestMatchers((matchers) -> matchers.mvcMatchers("/static/**"))
+                .requestMatchers((matchers) -> matchers.antMatchers(
+                        "/css/**","/js/**", "/partials/**",
+                        "/phantom-main/**","/plugins/**", "/screenshots/**"
+                        ,"/scss/**"))
                 .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
                 .requestCache().disable()
                 .securityContext().disable()
