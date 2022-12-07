@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <header th:replace="fragments/header ::header"/>
 <body><!-- set class="dark" on body tag for DARK-THEME -->
 
+<div layout:fragment="content">
 <div class="preloader">
     <div class="loading-mask"></div>
     <div class="loading-mask"></div>
@@ -223,7 +226,7 @@
     </div> <!-- /.pt-table -->
 </main> <!-- /.site-wrapper -->
 
-
+</div>
 <!--
 Essential Scripts
 =====================================-->

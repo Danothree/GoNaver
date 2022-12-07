@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+<body>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded',() => {
+            let errorMessage = [[${errorMessage}]];
+            if(errorMessage != null) {
+                alert(errorMessage);
+            }
+        });
+
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="input-form-backgroud row">
+            <div class="input-form col-md-12 mx-auto" style="padding-inline: 180px;">
+                <h4 class="mb-3">* 회원가입</h4>
+                <!-- form   -->
+                <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${SignUpDTO}" onsubmit="return member.pwCheck();">
+<!--                <form class="validation-form" novalidate>-->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name">이름</label>
+                            <input type="text" class="form-control" id="name" th:field="*{username}" placeholder="이름을 입력해주세요," autofocus required>
+                            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError">empty</p>
+                            <div class="invalid-feedback signupError">
+                                이름을 입력해주세요.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="password">비밀번호</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}"placeholder="비밀번호를 입력해주세요." size="20" maxlength="30" required>
+                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">empty</p>
+                            <div class="invalid-feedback signupError">
+                                비밀번호를 입력해주세요.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3" <div sec:authorize="isAnonymous()">
+                            <label for="password">비밀번호 확인</label>
+                            <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호를 입력해주세요." size="20" maxlength="30" required>
+                            <div class="invalid-feedback signupError">
+                                비밀번호 확인을 입력해주세요.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">이메일</label>
+                        <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="이메일을 입력해주세요." th:readonly="*{email} ?true : false" required>
+                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">empty</p>
+                        <div class="invalid-feedback signupError">
+                            이메일을 입력해주세요.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone">전화번호</label>
+                        <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="전화번호를 입력해주세요." required>
+                        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="fieldError">empty</p>
+                        <div class="invalid-feedback signupError">
+                            전화번호를 입력해주세요.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address">주소 <input type="button" class="btn btn-default btn-sm" onclick="member.getPostCode();" value="우편번호 찾기"><br></label>
+                        <input type="text" class="form-control" id="address"  th:field=*{address} placeholder="서울특별시 강남구" required>
+                        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">empty</p>
+                        <div class="invalid-feedback signupError">
+                            주소를 입력해주세요.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="detailAddress">상세주소</label>
+                        <input type="text" class="form-control" id="detailAddress" th:field=*{detailAddress} placeholder="상세주소를 입력해주세요." required>
+                        <p th:if="${#fields.hasErrors('detailAddress')}" th:errors="*{detailAddress}" class="fieldError">
+                            <div class="invalid-feedbac signupError">
+                                상세 주소를 입력해주세요.
+                            </div>
+                        </p>
+
+                    </div>
+
+                    <hr class="mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="aggrement" required>
+                        <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+                    </div>
+                    <div class="mb-4"></div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+                </form>
+            </div>
+        </div>
+        <footer class="my-3 text-center text-small">
+            <p class="mb-1">&copy; 2023 YD</p>
+        </footer>
+    </div>
+    <script>
+        window.addEventListener('load', () => {
+            const forms = document.getElementsByClassName('validation-form');
+
+            Array.prototype.filter.call(forms, (form) => {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    </script>
+</div>
+
+
+</body>
+</html>
