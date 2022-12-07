@@ -1,7 +1,7 @@
 package com.dano.kjm.service;
 
-import com.dano.kjm.dto.request.SignUpDTO;
-import com.dano.kjm.dto.response.UpdateMember;
+import com.dano.kjm.dto.request.SignUpDto;
+import com.dano.kjm.dto.response.MemberDetail;
 import com.dano.kjm.entity.Member;
 import com.dano.kjm.exception.DuplicatedException;
 import com.dano.kjm.repository.AuthorityRepository;
@@ -22,24 +22,24 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void saveMember(SignUpDTO signUpDTO) {
+    public void saveMember(SignUpDto signUpDTO) {
         duplicatedCheck(signUpDTO.getEmail());
         Member member = Member.createMember(signUpDTO, passwordEncoder);
         memberRepository.save(member);
         authorityRepository.saveAll(member.getAuthorityList());
     }
 
-    public SignUpDTO findMember(String email) {
+    public SignUpDto findMember(String email) {
         Member member = memberRepository.findByEmail(email).orElse(null);
-        SignUpDTO memberFormDto = new SignUpDTO();
-        UpdateMember.createMemberFormDto(member);
+        SignUpDto memberFormDto = new SignUpDto();
+        MemberDetail.createMemberFormDto(member);
         return memberFormDto;
     }
 
     @Transactional
-    public void updateMember(UpdateMember updateMember) {
-        Member member = memberRepository.findByEmail(updateMember.getEmail()).orElse(null);
-        member.updateMember(updateMember, passwordEncoder);
+    public void updateMember(MemberDetail memberDetail) {
+        Member member = memberRepository.findByEmail(memberDetail.getEmail()).orElse(null);
+        member.updateMember(memberDetail, passwordEncoder);
     }
 
     @Transactional

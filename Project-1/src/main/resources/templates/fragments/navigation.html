@@ -2,9 +2,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="navigation">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px;">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/">Danoth</a>
+            <a class="navbar-dano-brand" href="/">Danoth</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -21,18 +21,20 @@
                     </li>
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/members/sign-up" sec:authorize="isAnonymous()" >Sign Up</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/members/login" sec:authorize="isAnonymous()">LogIn</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/logout" sec:authorize="isAuthenticated()">LogOut</a></li>
+                    <!--장바구니-->
+                    <li sec:authorize="isAuthenticated()">
+                        <form class="d-flex nav-category">
+                            <button class="btn btn-outline-dark" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                Cart
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            </button>
+                        </form>
+                    </li>
                 </ul>
 
-                <!--장바구니-->
-                <div sec:authorize="isAuthenticated()" >
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
+
 
             </div>
         </div>

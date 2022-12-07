@@ -1,9 +1,8 @@
 package com.dano.kjm.entity;
 
 import com.dano.kjm.constant.Role;
-import com.dano.kjm.dto.request.SignUpDTO;
-import com.dano.kjm.dto.response.UpdateMember;
-import lombok.Builder;
+import com.dano.kjm.dto.request.SignUpDto;
+import com.dano.kjm.dto.response.MemberDetail;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +32,7 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Authority> authorityList = new ArrayList<>();
 
-    public static Member createMember(SignUpDTO signUpDto, PasswordEncoder encoder) {
+    public static Member createMember(SignUpDto signUpDto, PasswordEncoder encoder) {
         Member member = new Member();
         member.setEmail(signUpDto.getEmail());
         String password = encoder.encode(signUpDto.getPassword());
@@ -48,11 +47,11 @@ public class Member extends BaseTimeEntity {
         return member;
     }
 
-    public void updateMember(UpdateMember updateMember, PasswordEncoder encoder) {
-        String password = encoder.encode(updateMember.getPassword());
+    public void updateMember(MemberDetail memberDetail, PasswordEncoder encoder) {
+        String password = encoder.encode(memberDetail.getPassword());
         this.password = password;
-        this.address = Address.create(updateMember.getAddress(), updateMember.getDetailAddress());
-        this.phone = updateMember.getPhone();
+        this.address = Address.create(memberDetail.getAddress(), memberDetail.getDetailAddress());
+        this.phone = memberDetail.getPhone();
     }
 
     private void setEmail(String email) {

@@ -53,7 +53,7 @@ async function memberDelete(email) {
 
 function pwCheck() {
     let pw1 = document.querySelector('#password').value;
-    let pw2 = document.querySelector('#passwordCheck').value;
+    let pw2 = document.querySelector('#password2').value;
     if(pw1 != pw2) {
         common.showAlert('비밀번호를 확인해주세요.');
         return false;

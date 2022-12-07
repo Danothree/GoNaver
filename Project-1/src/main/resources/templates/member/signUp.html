@@ -68,7 +68,7 @@
             <div class="input-form col-md-12 mx-auto" style="padding-inline: 180px;">
                 <h4 class="mb-3">* 회원가입</h4>
                 <!-- form   -->
-                <form method="post" id='memberForm' th:action="@{/members}" th:object="${SignUpDTO}" onsubmit="return pwCheck();">
+                <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${SignUpDTO}" onsubmit="return pwCheck();">
 <!--                <form class="validation-form" novalidate>-->
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -93,7 +93,7 @@
                         </div>
                         <div class="col-md-6 mb-3" <div sec:authorize="isAnonymous()">
                             <label for="password">비밀번호 확인</label>
-                            <input type="password" class="form-control" id="password2" placeholder="비밀번호를 입력해주세요." size="20" maxlength="30" required>
+                            <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호를 입력해주세요." size="20" maxlength="30" required>
                             <div class="invalid-feedback signupError">
                                 비밀번호 확인을 입력해주세요.
                             </div>
@@ -111,7 +111,7 @@
 
                     <div class="mb-3">
                         <label for="phone">전화번호</label>
-                        <input type="phone" class="form-control" id="phone" th:field="*{phone}" placeholder="전화번호를 입력해주세요." required>
+                        <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="전화번호를 입력해주세요." required>
                         <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="fieldError">empty</p>
                         <div class="invalid-feedback signupError">
                             전화번호를 입력해주세요.
