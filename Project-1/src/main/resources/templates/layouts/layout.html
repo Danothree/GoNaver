@@ -3,19 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
     <div th:replace="fragments/head::head"></div>
     <div th:replace="fragments/script::script"></div>
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
-
 </head>
 <body>
 
     <th:block th:replace="fragments/navigation::navigation"></th:block>
-    <div layout:fragment="content" class="content">
-
-    </div>
+    <div layout:fragment="content" class="content"></div>
 
     <div th:replace="fragments/footer::footer"></div>
 </body>

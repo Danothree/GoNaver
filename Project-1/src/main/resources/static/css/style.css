@@ -1438,3 +1438,7 @@ label {
   border-color: #1e2530;
 }
 /*# sourceMappingURL=style.css.map */
+
+.signupError{
+  color: coral
+}
