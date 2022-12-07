@@ -11,16 +11,8 @@
 
 </head>
 <body>
-    <div th:replace="fragments/header::header"></div>
-    <div class="top-home">
-        <span><a href="/">home</a></span>
-    </div>
-    <div class="top-login">
-        <span><a href="/members" sec:authorize="isAnonymous()">sign up</a></span>
-        <span><a href="/members/login" sec:authorize="isAnonymous()">sign in</a></span>
-        <span><a href="/members" sec:authorize="isAuthenticated()">setting</a></span>
-        <span><a href="/logout" sec:authorize="isAuthenticated()">logout</a></span>
-    </div>
+
+    <th:block th:replace="fragments/navigation::navigation"></th:block>
     <div layout:fragment="content" class="content">
 
     </div>
