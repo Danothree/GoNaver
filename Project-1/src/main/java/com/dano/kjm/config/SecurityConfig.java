@@ -47,19 +47,25 @@ public class SecurityConfig {
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
         http.authorizeRequests()
-                .mvcMatchers("/", "/members/login", "/members").permitAll()
+                .mvcMatchers("/", "/members/login", "/members", "/items").permitAll()
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated();
         return http.build();
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring()
-                .antMatchers(
-                        "/css/**","/js/**","/partials/**",
-                        "/phantom-main/**","/plugins/**",
-                        "/screenshots/**","/scss/**"));
+    @Order(0)
+    public SecurityFilterChain resources(HttpSecurity http) throws Exception{
+        http
+                .requestMatchers((matchers) -> matchers.antMatchers(
+                        "/css/**","/js/**", "/partials/**",
+                        "/phantom-main/**","/plugins/**", "/screenshots/**"
+                        ,"/scss/**"))
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
+                .requestCache().disable()
+                .securityContext().disable()
+                .sessionManagement().disable();
+        return http.build();
     }
 
     @Bean
