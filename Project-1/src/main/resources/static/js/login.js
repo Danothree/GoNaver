@@ -61,3 +61,15 @@ function pwCheck() {
         return true;
     }
 }
+
+function loginCheck() {
+    const formData = {
+        email : document.getElementById('email').value,
+        password : document.getElementById('password').value
+    };
+    const check = common.nullCheck(formData,'email', 'password');
+    if(check) {
+        common.showAlert('정보를 다 입력해주세요');
+        return false;
+    };
+}

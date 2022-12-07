@@ -6,7 +6,7 @@
     <div layout:fragment="content">
         <div class="login-table">
             <div>sign in</div>
-            <form method="post" action="/members/login">
+            <form method="post" action="/members/login" onsubmit="return loginCheck();">
                 <table>
                     <tr>
                         <td>

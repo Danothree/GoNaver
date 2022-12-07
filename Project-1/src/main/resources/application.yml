@@ -1,8 +1,6 @@
 server:
   port: 8088
 
-
-
 #spring security
 
 spring:
@@ -16,9 +14,9 @@ spring:
     cache: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 'jdbc:mysql://localhost:3306/gonaver?serverTimezone=UTC'
+    url: 'jdbc:mysql://localhost:4406/gonaver?serverTimezone=UTC'
     username: 'root'
-    password: '1495'
+    password: 'root'
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,9 +26,12 @@ spring:
     database-platform: 'org.hibernate.dialect.MySQL5InnoDBDialect'
     properties:
       hibernate:
-#        format_sql: true
   main:
     allow-bean-definition-overriding: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 
 #logging
@@ -78,6 +79,10 @@ spring:
     properties:
       hibernate:
         dialect: 'org.hibernate.dialect.H2Dialect'
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 #logging
 logging:
