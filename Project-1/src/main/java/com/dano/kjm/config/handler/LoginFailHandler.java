@@ -37,6 +37,6 @@
 //            request.setAttribute("LoginFailMessage", "비밀번호가 만료된 계정입니다.");
 //        }
 //        else request.setAttribute("LoginFailMessage", "계정을 찾을 수 없습니다.");
-//        response.sendRedirect("/members/login/error");
+//        response.sendRedirect("/members/member/error");
 //    }
 //}
