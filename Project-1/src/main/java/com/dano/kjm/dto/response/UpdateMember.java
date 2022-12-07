@@ -1,6 +1,7 @@
-package com.dano.kjm.dto.request;
+package com.dano.kjm.dto.response;
 
 import com.dano.kjm.entity.Member;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -9,7 +10,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-public class MemberFormRqDto {
+@Builder
+public class UpdateMember {
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식에 어긋납니다.")
@@ -26,25 +28,20 @@ public class MemberFormRqDto {
     @NotBlank(message = "폰 번호를 입력하세요.")
     private String phone;
 
-//    @NotEmpty(message = "판매자, 구매자 중 하나를 선택해주세요.")
-//    private String role;
+    @NotBlank(message = "주소를 입력해주세요.")
+    private String address;
 
-    @NotEmpty(message = "주소를 입력하세요.")
-    private String city;
+    @NotBlank(message = "상세주소를 입력해주세요.")
+    private String detailAddress;
 
-    @NotEmpty(message = "주소를 입력하세요.")
-    private String street;
 
-    @NotEmpty(message = "주소를 입력하세요.")
-    private String postalCode;
-
-    public MemberFormRqDto createMemberFormDto(Member member) {
-        this.email = member.getEmail();
-        this.password = member.getPassword();
-        this.phone = member.getPhone();
-        this.city = member.getAddress().getCity();
-        this.street = member.getAddress().getStreet();
-        this.postalCode = member.getAddress().getPostalCode();
-        return this;
+    public static UpdateMember createMemberFormDto(Member member) {
+        return UpdateMember.builder()
+                .email(member.getEmail())
+                .password(member.getPassword())
+                .phone(member.getPhone())
+                .address(member.getAddress().getAddress())
+                .detailAddress(member.getAddress().getPostalCode())
+                .build();
     }
 }

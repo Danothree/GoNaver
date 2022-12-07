@@ -1,7 +1,7 @@
 package com.dano.kjm.controller;
 
-import com.dano.kjm.dto.request.MemberFormRqDto;
-import com.dano.kjm.dto.response.MemberFormRsDto;
+import com.dano.kjm.dto.request.SignUpDTO;
+import com.dano.kjm.dto.response.UpdateMember;
 import com.dano.kjm.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +20,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping
+    public String home(){
+        return "index";
+    }
+
     @GetMapping("/login")
     public String signIn() {
         return "member/memberLoginForm";
@@ -31,28 +36,19 @@ public class MemberController {
         return "member/memberLoginForm";
     }
 
-    @GetMapping
+    @GetMapping("/sign-up")
     public String signUp(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if ("anonymousUser".equals(principal)) {
-            model.addAttribute("memberFormRsDto", new MemberFormRsDto());
-            return "member/memberForm";
-        } else {
-            String email = ((UserDetails)principal).getUsername();
-            model.addAttribute("memberFormRsDto", memberService.findMember(email));
-            return "member/memberForm";
-        }
+        model.addAttribute("SignUpDTO", new SignUpDTO());
+        return "member/signUp";
     }
 
-    @PostMapping
-    public String signUp(@Valid MemberFormRqDto memberFormRqDto, BindingResult bindingResult, Model model) {
-
+    @PostMapping("/sign-up")
+    public String signUp(@Valid SignUpDTO signUpDTO, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "member/memberForm";
         }
-
         try {
-            memberService.saveMember(memberFormRqDto);
+            memberService.saveMember(signUpDTO);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
@@ -61,9 +57,8 @@ public class MemberController {
     }
 
     @PatchMapping
-    public String update(@Valid @RequestBody MemberFormRqDto memberFormRqDto) {
-
-        memberService.updateMember(memberFormRqDto);
+    public String update(@Valid @RequestBody UpdateMember updateMember) {
+        memberService.updateMember(updateMember);
         return "redirect:/";
     }
 

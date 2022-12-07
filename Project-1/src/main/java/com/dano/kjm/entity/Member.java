@@ -1,9 +1,12 @@
 package com.dano.kjm.entity;
 
 import com.dano.kjm.constant.Role;
-import com.dano.kjm.dto.request.MemberFormRqDto;
+import com.dano.kjm.dto.request.SignUpDTO;
+import com.dano.kjm.dto.response.UpdateMember;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -12,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Member extends BaseTimeEntity {
 
@@ -19,6 +23,7 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id")
     private Long id;
 
+    private String username;
     private String email;
     private String password;
     private String phone;
@@ -28,23 +33,26 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Authority> authorityList = new ArrayList<>();
 
-    public static Member createMember(MemberFormRqDto memberFormDto, PasswordEncoder encoder) {
+    public static Member createMember(SignUpDTO signUpDto, PasswordEncoder encoder) {
         Member member = new Member();
-        member.setEmail(memberFormDto.getEmail());
-        String password = encoder.encode(memberFormDto.getPassword());
+        member.setEmail(signUpDto.getEmail());
+        String password = encoder.encode(signUpDto.getPassword());
+        member.setUsername(signUpDto.getUsername());
         member.setPassword(password);
-        member.setPhone(memberFormDto.getPhone());
-        member.setAddress(new Address(memberFormDto.getCity(), memberFormDto.getStreet(), memberFormDto.getPostalCode()));
+        member.setPhone(signUpDto.getPhone());
+        member.setAddress(
+                Address.create(signUpDto.getAddress(), signUpDto.getDetailAddress())
+        );
         Authority authority = Authority.setRoleAndMember(Role.CONSUMER, member);
         member.addAuthorityList(authority);
         return member;
     }
 
-    public void updateMember(MemberFormRqDto memberFormDto, PasswordEncoder encoder) {
-        String password = encoder.encode(memberFormDto.getPassword());
+    public void updateMember(UpdateMember updateMember, PasswordEncoder encoder) {
+        String password = encoder.encode(updateMember.getPassword());
         this.password = password;
-        this.address = new Address(memberFormDto.getCity(), memberFormDto.getStreet(), memberFormDto.getPostalCode());
-        this.phone = memberFormDto.getPhone();
+        this.address = Address.create(updateMember.getAddress(), updateMember.getDetailAddress());
+        this.phone = updateMember.getPhone();
     }
 
     private void setEmail(String email) {
@@ -67,4 +75,7 @@ public class Member extends BaseTimeEntity {
         this.authorityList.add(authority);
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
