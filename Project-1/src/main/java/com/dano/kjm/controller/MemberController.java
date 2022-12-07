@@ -73,8 +73,4 @@ public class MemberController {
         return "redirect:/";
     }
 
-    public boolean passwordCheck(String pw1, String pw2) {
-        return pw1 == pw2;
-    }
-
 }
