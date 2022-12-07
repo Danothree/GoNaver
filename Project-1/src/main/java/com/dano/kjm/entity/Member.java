@@ -1,8 +1,7 @@
 package com.dano.kjm.entity;
 
 import com.dano.kjm.constant.Role;
-import com.dano.kjm.dto.MemberDto;
-import com.dano.kjm.dto.MemberFormDto;
+import com.dano.kjm.dto.request.MemberFormRqDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +28,7 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Authority> authorityList = new ArrayList<>();
 
-    public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder encoder) {
+    public static Member createMember(MemberFormRqDto memberFormDto, PasswordEncoder encoder) {
         Member member = new Member();
         member.setEmail(memberFormDto.getEmail());
         String password = encoder.encode(memberFormDto.getPassword());
@@ -41,7 +40,7 @@ public class Member extends BaseTimeEntity {
         return member;
     }
 
-    public void updateMember(MemberFormDto memberFormDto, PasswordEncoder encoder) {
+    public void updateMember(MemberFormRqDto memberFormDto, PasswordEncoder encoder) {
         String password = encoder.encode(memberFormDto.getPassword());
         this.password = password;
         this.address = new Address(memberFormDto.getCity(), memberFormDto.getStreet(), memberFormDto.getPostalCode());

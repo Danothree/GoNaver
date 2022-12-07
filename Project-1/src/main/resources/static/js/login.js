@@ -1,17 +1,23 @@
-function memberUpdate() {
+async function memberUpdate() {
     const formData = {
         email : document.getElementById('email').value,
         password : document.getElementById('password').value,
+        passwordCheck : document.getElementById('passwordCheck').value,
         phone : document.getElementById('phone').value,
         city : document.getElementById('city').value,
         street : document.getElementById('street').value,
         postalCode : document.getElementById('postalCode').value
     };
-    const check = common.nullCheck(formData,'email', 'password', 'phone', 'city', 'street', 'postalCode');
+    const check = common.nullCheck(formData,'email', 'password', 'passwordCheck', 'phone', 'city', 'street', 'postalCode');
     if(check) {
         common.showAlert('정보를 다 입력해주세요');
         return false;
     };
+
+    if(!pwCheck()) {
+        common.showAlert('비밀번호가 틀립니다.');
+        return false;
+    }
 
     const options = {
         method : 'PATCH',
@@ -21,17 +27,16 @@ function memberUpdate() {
         body : JSON.stringify(formData),
         redirect : 'follow'
     };
-    fetch('/members',options)
-        .then((res) => {
-            if(res.redirected) {
-                alert('수정 완료!');
-                window.location.href=res.url;
-            }
-        });
-
+    const res = await fetch('/members',options);
+    if(res.redirected) {
+        common.showAlert('수정 완료!');
+        window.location.href=res.url;
+    }
 }
-
-function memberDelete(email) {
+function delConfirm(email) {
+    common.confirm('정말로 탈퇴하시겠습니까?',memberDelete(email));
+}
+async function memberDelete(email) {
     let data = new FormData();
     data.append('email', email);
     const options = {
@@ -39,15 +44,11 @@ function memberDelete(email) {
         body : data,
         redirect : 'follow'
     };
-    if(confirm("정말로 삭제하시겠습니까?")) {
-        fetch('/members',options)
-            .then((res) => {
-                if(res.redirected) {
-                    common.showAlert('삭제 완료!');
-                    window.location.href='/logout';
-                }
-            });
-    }
+    const res = await fetch('/members',options);
+    if(res.redirected) {
+        common.showAlert('탈퇴 완료!');
+        window.location.href='/logout';
+    };
 }
 
 function pwCheck() {
@@ -59,4 +60,16 @@ function pwCheck() {
     } else {
         return true;
     }
+}
+
+function loginCheck() {
+    const formData = {
+        email : document.getElementById('email').value,
+        password : document.getElementById('password').value
+    };
+    const check = common.nullCheck(formData,'email', 'password');
+    if(check) {
+        common.showAlert('정보를 다 입력해주세요');
+        return false;
+    };
 }

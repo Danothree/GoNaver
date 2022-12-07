@@ -1,7 +1,7 @@
 package com.dano.kjm.controller;
 
-import com.dano.kjm.dto.MemberFormDto;
-import com.dano.kjm.exception.DuplicatedException;
+import com.dano.kjm.dto.request.MemberFormRqDto;
+import com.dano.kjm.dto.response.MemberFormRsDto;
 import com.dano.kjm.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,24 +35,24 @@ public class MemberController {
     public String signUp(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ("anonymousUser".equals(principal)) {
-            model.addAttribute("memberFormDto", new MemberFormDto());
+            model.addAttribute("memberFormRsDto", new MemberFormRsDto());
             return "member/memberForm";
         } else {
             String email = ((UserDetails)principal).getUsername();
-            model.addAttribute("memberFormDto", memberService.findMember(email));
+            model.addAttribute("memberFormRsDto", memberService.findMember(email));
             return "member/memberForm";
         }
     }
 
     @PostMapping
-    public String signUp(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+    public String signUp(@Valid MemberFormRqDto memberFormRqDto, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()) {
             return "member/memberForm";
         }
 
         try {
-            memberService.saveMember(memberFormDto);
+            memberService.saveMember(memberFormRqDto);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
@@ -61,8 +61,9 @@ public class MemberController {
     }
 
     @PatchMapping
-    public String update(@Valid @RequestBody MemberFormDto memberFormDto) {
-        memberService.updateMember(memberFormDto);
+    public String update(@Valid @RequestBody MemberFormRqDto memberFormRqDto) {
+
+        memberService.updateMember(memberFormRqDto);
         return "redirect:/";
     }
 
@@ -70,10 +71,6 @@ public class MemberController {
     public String delete(@RequestParam String email) {
         memberService.deleteMember(email);
         return "redirect:/";
-    }
-
-    public boolean passwordCheck(String pw1, String pw2) {
-        return pw1 == pw2;
     }
 
 }

@@ -39,8 +39,8 @@ public class SecurityConfig {
                 .usernameParameter("email")
                 .passwordParameter("password")
 //                .successForwardUrl("/")
-                .defaultSuccessUrl("/")
-                .failureUrl("/member/login/error");
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/members/login/error");
 
         http.logout()
                 .logoutUrl("/logout")

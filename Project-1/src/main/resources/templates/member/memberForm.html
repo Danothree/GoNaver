@@ -19,7 +19,7 @@
     <div class="login-table">
         <div sec:authorize="isAnonymous()">sign up</div>
         <div sec:authorize="isAuthenticated()">update</div>
-        <form method="post" id='memberForm' th:action="@{/members}" th:object="${memberFormDto}" onsubmit="return pwCheck();">
+        <form method="post" id='memberForm' th:action="@{/members}" th:object="${memberFormRsDto}" onsubmit="return pwCheck();">
             <table>
                 <tr>
                     <td>
@@ -74,7 +74,7 @@
                     <td>
                         <input type="submit" value="등록" class="submit" sec:authorize="isAnonymous()">
                         <input type="button" value="수정" sec:authorize="isAuthenticated()" onclick="memberUpdate()">
-                        <input type="button" value="탈퇴" sec:authorize="isAuthenticated()" onclick="memberDelete(document.getElementById('email').value)">
+                        <input type="button" value="탈퇴" sec:authorize="isAuthenticated()" onclick="delConfirm(document.getElementById('email').value)">
                         <input type="button" value="취소">
                     </td>
                 </tr>
