@@ -28,4 +28,16 @@ public class Authority {
 
         return authority;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Member getMember() {
+        return member;
+    }
 }

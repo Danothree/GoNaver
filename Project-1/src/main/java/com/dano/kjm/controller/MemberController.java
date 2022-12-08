@@ -25,7 +25,7 @@ public class MemberController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "member/memberLoginForm";
+        return "member/login";
     }
 
     @GetMapping("/login/error")
@@ -36,7 +36,7 @@ public class MemberController {
 
     @GetMapping("/sign-up")
     public String signUp(Model model) {
-        model.addAttribute("SignUpDto", new SignUpDto());
+        model.addAttribute("signUpDto", new SignUpDto());
         return "member/signUp";
     }
 
@@ -63,6 +63,12 @@ public class MemberController {
     @DeleteMapping
     public String delete(@RequestParam String email) {
         memberService.deleteMember(email);
+        return "redirect:/";
+    }
+
+    @GetMapping("/{id}")
+    public String test(@PathVariable("id") String id){
+        System.out.println(id);
         return "redirect:/";
     }
 
