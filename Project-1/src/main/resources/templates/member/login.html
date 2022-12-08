@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+<body>
+
+<th:block layout:fragment="script">
+
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="input-form-backgroud row">
+            <div class="input-form col-md-12 mx-auto" style="padding-inline: 180px;">
+                <h3 class="mb-3" >로그인</h3></br>
+                <!-- form   -->
+                <form method="post" action="/members/login" onsubmit="return loginCheck();">
+                    <div style="    padding: 3px 5px;  margin-inline: 81px; margin-inline-end: -341px;">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요." autofocus required>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력해주세요." required>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg d-grid gap-2 col-6 mx-auto" type="submit">로그인</button>
+               </form>
+            </div>
+        </div>
+        <footer class="my-3 text-center text-small">
+            <p class="mb-1">&copy; 2023 YD</p>
+        </footer>
+    </div>
+
+</div>
+
+
+</body>
+</html>

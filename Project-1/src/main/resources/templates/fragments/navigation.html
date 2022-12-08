@@ -2,37 +2,37 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="navigation">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px;">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/">Danoth</a>
+            <a class="navbar-dano-brand" href="/">Danoth</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Category</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">베스트</a></li>
-                            <li><a class="dropdown-item" href="#!">상의</a></li>
-<!--                            <li><hr class="dropdown-divider" />하의</li>-->
-                            <li><a class="dropdown-item" href="#!">하의</a></li>
-                            <li><a class="dropdown-item" href="#!">아우터</a></li>
-                            <li><a class="dropdown-item" href="#!">악세사리</a></li>
-                        </ul>
-                    </li>
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Category</a>-->
+<!--                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                            <li><a class="dropdown-item" href="#!">베스트</a></li>-->
+<!--                            <li><a class="dropdown-item" href="#!">상의</a></li>-->
+<!--                            <li><a class="dropdown-item" href="#!">하의</a></li>-->
+<!--                            <li><a class="dropdown-item" href="#!">아우터</a></li>-->
+<!--                            <li><a class="dropdown-item" href="#!">악세사리</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/members/sign-up" sec:authorize="isAnonymous()" >Sign Up</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/members/login" sec:authorize="isAnonymous()">LogIn</a></li>
-                </ul>
+                    <li class="nav-item"><a class="nav-link active" href="/logout" sec:authorize="isAuthenticated()">LogOut</a></li>
 
-                <!--장바구니-->
-                <div sec:authorize="isAuthenticated()" >
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"  sec:authorize="isAuthenticated()">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="myPageDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false" >MyPage</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item btn btn-outline-dark" th:href="@{'/members/' + ${#authentication.getName()}}" >개인 정보 수정</a></li>
+                                <li><a class="dropdown-item btn btn-outline-dark" href="#!"><i class="bi-cart-fill me-1"></i>장바구니</a></li>
+                                <li><a class="dropdown-item btn btn-outline-dark" href="#!">주문 및 배송 조회</a></li>
+                                <li><a class="dropdown-item btn btn-outline-dark" href="#!">쿠폰</a></li>
+                            </ul>
+                        </li>
+                </ul>
 
             </div>
         </div>
@@ -44,9 +44,9 @@
 <!--    <div class="top-home">-->
 <!--        <span><a href="/">home</a></span>-->
 <!--    </div>-->
-<!--    <div class="top-login">-->
+<!--    <div class="top-member">-->
 <!--        <span><a href="/members" sec:authorize="isAnonymous()">sign up</a></span>-->
-<!--        <span><a href="/members/login" sec:authorize="isAnonymous()">sign in</a></span>-->
+<!--        <span><a href="/members/member" sec:authorize="isAnonymous()">sign in</a></span>-->
 <!--        <span><a href="/members" sec:authorize="isAuthenticated()">setting</a></span>-->
 <!--        <span><a href="/logout" sec:authorize="isAuthenticated()">logout</a></span>-->
 <!--    </div>-->

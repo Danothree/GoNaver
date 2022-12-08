@@ -8,7 +8,7 @@ const common = {
         }
         return result;
     },
-    showAlert : function(title, option) {
+    showAlert : (title, option) => {
         const defaultOption = {
             title : title,
             text : '',
@@ -19,7 +19,7 @@ const common = {
 
         Swal.fire(defaultOption);
     },
-    confirm : function(title, func) {
+    confirm : (title, func) => {
         const defaultOption = {
             icon : 'warning',
             title : title,

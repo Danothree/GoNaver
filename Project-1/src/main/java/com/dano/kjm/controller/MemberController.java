@@ -1,11 +1,9 @@
 package com.dano.kjm.controller;
 
-import com.dano.kjm.dto.request.SignUpDTO;
-import com.dano.kjm.dto.response.UpdateMember;
+import com.dano.kjm.dto.request.SignUpDto;
+import com.dano.kjm.dto.response.MemberDetail;
 import com.dano.kjm.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +25,7 @@ public class MemberController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "member/memberLoginForm";
+        return "member/login";
     }
 
     @GetMapping("/login/error")
@@ -38,33 +36,39 @@ public class MemberController {
 
     @GetMapping("/sign-up")
     public String signUp(Model model) {
-        model.addAttribute("SignUpDTO", new SignUpDTO());
+        model.addAttribute("signUpDto", new SignUpDto());
         return "member/signUp";
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@Valid SignUpDTO signUpDTO, BindingResult bindingResult, Model model) {
+    public String signUp(@Valid SignUpDto signUpDto, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
-            return "member/memberForm";
+            return "member/signUp";
         }
         try {
-            memberService.saveMember(signUpDTO);
+            memberService.saveMember(signUpDto);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberForm";
+            return "member/signUp";
         }
         return "redirect:/";
     }
 
     @PatchMapping
-    public String update(@Valid @RequestBody UpdateMember updateMember) {
-        memberService.updateMember(updateMember);
+    public String update(@Valid @RequestBody MemberDetail memberDetail) {
+        memberService.updateMember(memberDetail);
         return "redirect:/";
     }
 
     @DeleteMapping
     public String delete(@RequestParam String email) {
         memberService.deleteMember(email);
+        return "redirect:/";
+    }
+
+    @GetMapping("/{id}")
+    public String test(@PathVariable("id") String id){
+        System.out.println(id);
         return "redirect:/";
     }
 

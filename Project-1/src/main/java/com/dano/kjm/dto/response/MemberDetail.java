@@ -7,11 +7,10 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @Builder
-public class UpdateMember {
+public class MemberDetail {
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식에 어긋납니다.")
@@ -35,8 +34,8 @@ public class UpdateMember {
     private String detailAddress;
 
 
-    public static UpdateMember createMemberFormDto(Member member) {
-        return UpdateMember.builder()
+    public static MemberDetail createMemberFormDto(Member member) {
+        return MemberDetail.builder()
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .phone(member.getPhone())
