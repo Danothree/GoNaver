@@ -1,9 +1,11 @@
 package com.dano.kjm.service;
 
+import com.dano.kjm.dto.MemberDto;
 import com.dano.kjm.dto.request.SignUpDto;
 import com.dano.kjm.dto.response.MemberDetail;
 import com.dano.kjm.entity.Member;
 import com.dano.kjm.exception.DuplicatedException;
+import com.dano.kjm.exception.UserNotFoundException;
 import com.dano.kjm.repository.AuthorityRepository;
 import com.dano.kjm.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,17 +31,19 @@ public class MemberService {
         authorityRepository.saveAll(member.getAuthorities());
     }
 
-    public SignUpDto findMember(String email) {
+    public MemberDetail findMember(String email) {
         Member member = memberRepository.findByEmail(email).orElse(null);
-        SignUpDto memberFormDto = new SignUpDto();
-        MemberDetail.createMemberFormDto(member);
-        return memberFormDto;
+        return MemberDetail.createMemberFormDto(member);
     }
 
     @Transactional
-    public void updateMember(MemberDetail memberDetail) {
-        Member member = memberRepository.findByEmail(memberDetail.getEmail()).orElse(null);
-        member.updateMember(memberDetail, passwordEncoder);
+    public void updateMember(MemberDetail memberDetail, String email) {
+        if (memberDetail.getEmail().equals(email)) {
+            Member member = memberRepository.findByEmail(email).orElse(null);
+            member.updateMember(memberDetail, passwordEncoder);
+        } else {
+            throw new UserNotFoundException("존재하지 않는 회원입니다.");
+        }
     }
 
     @Transactional

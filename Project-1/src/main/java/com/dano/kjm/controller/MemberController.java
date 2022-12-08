@@ -54,9 +54,16 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @PatchMapping
-    public String update(@Valid @RequestBody MemberDetail memberDetail) {
-        memberService.updateMember(memberDetail);
+    @GetMapping("/{email}")
+    public String update(@PathVariable String email, Model model) {
+        MemberDetail memberDetail = memberService.findMember(email);
+        model.addAttribute("memberDetail", memberDetail);
+        return "member/detail";
+    }
+
+    @PatchMapping("/{email}")
+    public String update(@Valid @RequestBody MemberDetail memberDetail, @PathVariable String email) {
+        memberService.updateMember(memberDetail, email);
         return "redirect:/";
     }
 
@@ -65,11 +72,4 @@ public class MemberController {
         memberService.deleteMember(email);
         return "redirect:/";
     }
-
-    @GetMapping("/{id}")
-    public String test(@PathVariable("id") String id){
-        System.out.println(id);
-        return "redirect:/";
-    }
-
 }

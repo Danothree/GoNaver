@@ -24,12 +24,12 @@
             <div class="input-form col-md-12 mx-auto" style="padding-inline: 180px;">
                 <h3 class="mb-3">회원가입</h3></br>
                 <!-- form   -->
-                <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${signUpDto}" onsubmit="return member.pwCheck();">
+                <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${memberDetail}" onsubmit="return member.pwCheck();">
 <!--                <form class="validation-form" novalidate>-->
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="name">이름</label>
-                            <input type="text" class="form-control" id="name" th:field="*{username}" placeholder="이름을 입력해주세요," autofocus required>
+                            <label for="username">이름</label>
+                            <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="이름을 입력해주세요," autofocus required>
                             <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError">empty</p>
                             <div class="invalid-feedback signupError">
                                 이름을 입력해주세요.
@@ -95,12 +95,8 @@
                     </div>
 
                     <hr class="mb-4">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="aggrement" required>
-                        <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
-                    </div>
                     <div class="mb-4"></div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+                    <button class="btn btn-primary btn-lg btn-block" onclick="member.update()">수정 하기</button>
                 </form>
             </div>
         </div>
