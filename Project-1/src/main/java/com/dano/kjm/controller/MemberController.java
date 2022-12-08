@@ -36,17 +36,17 @@ public class MemberController {
 
     @GetMapping("/sign-up")
     public String signUp(Model model) {
-        model.addAttribute("SignUpDTO", new SignUpDto());
+        model.addAttribute("SignUpDto", new SignUpDto());
         return "member/signUp";
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@Valid SignUpDto signUpDTO, BindingResult bindingResult, Model model) {
+    public String signUp(@Valid SignUpDto signUpDto, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "member/signUp";
         }
         try {
-            memberService.saveMember(signUpDTO);
+            memberService.saveMember(signUpDto);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/signUp";

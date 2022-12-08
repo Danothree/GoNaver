@@ -30,7 +30,7 @@ public class Member extends BaseTimeEntity {
     private Address address;
 
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Authority> authorityList = new ArrayList<>();
+    private List<Authority> authorities = new ArrayList<>();
 
     public static Member createMember(SignUpDto signUpDto, PasswordEncoder encoder) {
         Member member = new Member();
@@ -71,7 +71,7 @@ public class Member extends BaseTimeEntity {
     }
 
     public void addAuthorityList(Authority authority) {
-        this.authorityList.add(authority);
+        this.authorities.add(authority);
     }
 
     public void setUsername(String username) {

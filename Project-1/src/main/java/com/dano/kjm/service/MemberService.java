@@ -26,7 +26,7 @@ public class MemberService {
         duplicatedCheck(signUpDTO.getEmail());
         Member member = Member.createMember(signUpDTO, passwordEncoder);
         memberRepository.save(member);
-        authorityRepository.saveAll(member.getAuthorityList());
+        authorityRepository.saveAll(member.getAuthorities());
     }
 
     public SignUpDto findMember(String email) {
