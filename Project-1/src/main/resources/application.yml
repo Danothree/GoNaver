@@ -20,7 +20,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/gonaver?serverTimezone=UTC
     username: 'root'
-    password: '1495'
+    password: Password!
   jpa:
     hibernate:
       ddl-auto: update
