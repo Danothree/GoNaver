@@ -35,7 +35,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .formLogin()
-                .loginPage("/members/member")
+                .loginPage("/members/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
 //                .successForwardUrl("/")

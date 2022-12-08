@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 회원입니다."));
 
-        return new SecurityMember(member, member.getAuthorityList().stream()
+        return new SecurityMember(member, member.getAuthorities().stream()
                 .map(Authority::getRole)
                 .map(Role::name)
                 .map(SimpleGrantedAuthority::new)

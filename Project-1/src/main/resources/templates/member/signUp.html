@@ -24,7 +24,7 @@
             <div class="input-form col-md-12 mx-auto" style="padding-inline: 180px;">
                 <h4 class="mb-3">* 회원가입</h4>
                 <!-- form   -->
-                <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${SignUpDTO}" onsubmit="return member.pwCheck();">
+                <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${SignUpDto}" onsubmit="return member.pwCheck();">
 <!--                <form class="validation-form" novalidate>-->
                     <div class="row">
                         <div class="col-md-6 mb-3">
