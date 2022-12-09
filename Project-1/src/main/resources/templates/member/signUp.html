@@ -24,6 +24,7 @@
             <div class="input-form col-md-12 mx-auto" style="padding-inline: 180px;">
                 <h3 class="mb-3">회원가입</h3></br>
                 <!-- form   -->
+                <input type="hidden" th:if="${errorMessage}" th:value="${errorMessage}" id="errorMessage">
                 <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${signUpDto}" onsubmit="return member.pwCheck();">
 <!--                <form class="validation-form" novalidate>-->
                     <div class="row">

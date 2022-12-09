@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -29,9 +30,9 @@ public class MemberController {
     }
 
     @GetMapping("/login/error")
-    public String signInError(Model model) {
+    public String signInError(HttpServletRequest request, Model model) {
         model.addAttribute("errorMessage", "아이디 또는 비밀번호를 확인해주세요.");
-        return "member/memberLoginForm";
+        return "member/login";
     }
 
     @GetMapping("/sign-up")
