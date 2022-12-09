@@ -1,23 +1,30 @@
 const common = {
     nullCheck : (data,...list) => {
-        let result = false;
+
         for (let i = 0; i < list.length; i++) {
             if(data[list[i]] == undefined || data[list[i]] == "") {
-                result = true;
+                common.showAlert('정보를 다 입력해주세요','warning');
+                return true;
             }
         }
-        return result;
+        return false;
     },
-    showAlert : (title, option) => {
+    showAlert : (title, option, url) => {
+        let i = option ? option : 'success';
         const defaultOption = {
             title : title,
             text : '',
-            icon : 'info',
+            icon : i,
             confirmButtonText: '확인',
             heightAuto: false
         }
 
-        Swal.fire(defaultOption);
+        swal.fire(defaultOption)
+            .then(result => {
+                if(result.isConfirmed && url != undefined) {
+                    document.location.href = url;
+                }
+            })
     },
     confirm : (title, func) => {
         const defaultOption = {
@@ -30,11 +37,29 @@ const common = {
             confirmButtonText: '확인',
             cancelButtonText: '취소',
         }
-        Swal.fire(defaultOption)
+        swal.fire(defaultOption)
             .then(result => {
                 if(result.isConfirmed) {
                     func();
                 }
             });
+    },
+    serialize : (rawData) => {
+        let result = {};
+
+        for(let [key, val] of rawData) {
+            let sel = document.querySelectorAll("[name=" + key + "]");
+
+            if (sel.length > 1) {
+                if (result[key] === undefined) {
+                    result[key] = [];
+                }
+                result[key].push(val);
+            }
+            else {
+                result[key] = val;
+            }
+        }
+        return result;
     }
 }

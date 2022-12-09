@@ -22,9 +22,9 @@
     <div class="container">
         <div class="input-form-backgroud row">
             <div class="input-form col-md-12 mx-auto" style="padding-inline: 180px;">
-                <h3 class="mb-3">회원가입</h3></br>
+                <h3 class="mb-3">개인정보</h3></br>
                 <!-- form   -->
-                <form method="post" id='memberForm' th:action="@{/members/sign-up}" th:object="${memberDetail}" onsubmit="return member.pwCheck();">
+                <form method="post" id='memberForm' th:action="@{/}" th:object="${memberDetail}" >
 <!--                <form class="validation-form" novalidate>-->
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -95,8 +95,9 @@
                     </div>
 
                     <hr class="mb-4">
-                    <div class="mb-4"></div>
-                    <button class="btn btn-primary btn-lg btn-block" onclick="member.update()">수정 하기</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="member.update(document.getElementById('memberForm'))">수정하기</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="member.delete()">탈퇴</button>
+                    <span class="btn btn-primary btn-lg btn-block" onclick="history.back();">취소</span>
                 </form>
             </div>
         </div>

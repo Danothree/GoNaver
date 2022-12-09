@@ -1,5 +1,6 @@
 package com.dano.kjm.controller;
 
+import com.dano.kjm.dto.request.MemberUpdateDto;
 import com.dano.kjm.dto.request.SignUpDto;
 import com.dano.kjm.dto.response.MemberDetail;
 import com.dano.kjm.service.MemberService;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -29,9 +31,9 @@ public class MemberController {
     }
 
     @GetMapping("/login/error")
-    public String signInError(Model model) {
+    public String signInError(HttpServletRequest request, Model model) {
         model.addAttribute("errorMessage", "아이디 또는 비밀번호를 확인해주세요.");
-        return "member/memberLoginForm";
+        return "member/login";
     }
 
     @GetMapping("/sign-up")
@@ -54,22 +56,23 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @PatchMapping
+    public String update(@Valid @RequestBody MemberUpdateDto memberUpdateDto) {
+        memberService.updateMember(memberUpdateDto);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/{email}")
+    public String delete(@PathVariable("email") String email) {
+        memberService.deleteMember(email);
+        return "redirect:/";
+    }
+
     @GetMapping("/{email}")
-    public String update(@PathVariable String email, Model model) {
+    public String update(@PathVariable("email") String email, Model model){
         MemberDetail memberDetail = memberService.findMember(email);
         model.addAttribute("memberDetail", memberDetail);
         return "member/detail";
     }
 
-    @PatchMapping("/{email}")
-    public String update(@Valid @RequestBody MemberDetail memberDetail, @PathVariable String email) {
-        memberService.updateMember(memberDetail, email);
-        return "redirect:/";
-    }
-
-    @DeleteMapping
-    public String delete(@RequestParam String email) {
-        memberService.deleteMember(email);
-        return "redirect:/";
-    }
 }
