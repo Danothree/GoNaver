@@ -1,8 +1,8 @@
 package com.dano.kjm.entity;
 
 import com.dano.kjm.constant.Role;
+import com.dano.kjm.dto.request.MemberUpdateDto;
 import com.dano.kjm.dto.request.SignUpDto;
-import com.dano.kjm.dto.response.MemberDetail;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,11 +47,12 @@ public class Member extends BaseTimeEntity {
         return member;
     }
 
-    public void updateMember(MemberDetail memberDetail, PasswordEncoder encoder) {
-        String password = encoder.encode(memberDetail.getPassword());
+    public void updateMember(MemberUpdateDto memberUpdateDto, PasswordEncoder encoder) {
+        String password = encoder.encode(memberUpdateDto.getPassword());
+        this.username = memberUpdateDto.getUsername();
         this.password = password;
-        this.address = Address.create(memberDetail.getAddress(), memberDetail.getDetailAddress());
-        this.phone = memberDetail.getPhone();
+        this.address = Address.create(memberUpdateDto.getAddress(), memberUpdateDto.getDetailAddress());
+        this.phone = memberUpdateDto.getPhone();
     }
 
     private void setEmail(String email) {

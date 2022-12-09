@@ -1,56 +1,39 @@
 const member = {
 
     //회원 수정
-    update : async () => {
-        const formData = {
-            email : document.getElementById('email').value,
-            password : document.getElementById('password').value,
-            passwordCheck : document.getElementById('passwordCheck').value,
-            phone : document.getElementById('phone').value,
-            city : document.getElementById('city').value,
-            street : document.getElementById('street').value,
-            postalCode : document.getElementById('postalCode').value
-        };
-        const check = common.nullCheck(formData,'email', 'password', 'passwordCheck', 'phone', 'city', 'street', 'postalCode');
-        if(check) {
-            common.showAlert('정보를 다 입력해주세요');
-            return false;
-        };
-
-        if(!pwCheck()) {
-            common.showAlert('비밀번호가 틀립니다.');
+    update : async (formData) => {
+        let data = new FormData(formData);
+        let serializeData = common.serialize(data);
+        const nullCheck = common.nullCheck(serializeData, 'username','email','password','phone','address','detailAddress');
+        if(nullCheck) {
             return false;
         }
 
         const options = {
-            method : 'PATCH',
-            headers : {
+            method: 'PATCH',
+            headers: {
                 'Content-Type': 'application/json'
             },
-            body : JSON.stringify(formData),
-            redirect : 'follow'
+            body: JSON.stringify(serializeData),
+            redirect: 'follow'
         };
-        const res = await fetch('/members',options);
-        if(res.redirected) {
-            common.showAlert('수정 완료!');
-            window.location.href=res.url;
+        const res = await fetch('/members', options);
+        if (res.redirected) {
+            common.showAlert('수정 완료!','success', res.url);
         }
     },
 
     //회원 탈퇴
-    delete : (email) => {
-        common.confirm('정말로 탈퇴하시겠습니까?', async (email) => {
-            let data = new FormData();
-            data.append('email', email);
+    delete : () => {
+        common.confirm('정말로 탈퇴하시겠습니까?', async () => {
+            const email = document.getElementById('email').value;
             const options = {
                 method : 'DELETE',
-                body : data,
                 redirect : 'follow'
             };
-            const res = await fetch('/members',options);
+            const res = await fetch('/members/'+email, options);
             if(res.redirected) {
-                common.showAlert('탈퇴 완료!');
-                window.location.href='/logout';
+                common.showAlert('탈퇴 완료!', 'success', '/logout');
             };
         });
     },
@@ -73,11 +56,7 @@ const member = {
             email : document.getElementById('email').value,
             password : document.getElementById('password').value
         };
-        const check = common.nullCheck(formData,'email', 'password');
-        if(check) {
-            common.showAlert('정보를 다 입력해주세요');
-            return false;
-        }
+        common.nullCheck(formData,'email', 'password');
     },
 
     //우편 검색

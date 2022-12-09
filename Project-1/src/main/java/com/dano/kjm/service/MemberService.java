@@ -1,5 +1,6 @@
 package com.dano.kjm.service;
 
+import com.dano.kjm.dto.request.MemberUpdateDto;
 import com.dano.kjm.dto.request.SignUpDto;
 import com.dano.kjm.dto.response.MemberDetail;
 import com.dano.kjm.entity.Member;
@@ -29,17 +30,16 @@ public class MemberService {
         authorityRepository.saveAll(member.getAuthorities());
     }
 
-    public SignUpDto findMember(String email) {
+    public MemberDetail findMember(String email) {
         Member member = memberRepository.findByEmail(email).orElse(null);
-        SignUpDto memberFormDto = new SignUpDto();
-        MemberDetail.createMemberFormDto(member);
-        return memberFormDto;
+        MemberDetail memberDetail = MemberDetail.createMemberFormDto(member);
+        return memberDetail;
     }
 
     @Transactional
-    public void updateMember(MemberDetail memberDetail) {
-        Member member = memberRepository.findByEmail(memberDetail.getEmail()).orElse(null);
-        member.updateMember(memberDetail, passwordEncoder);
+    public void updateMember(MemberUpdateDto memberUpdateDto) {
+        Member member = memberRepository.findByEmail(memberUpdateDto.getEmail()).orElse(null);
+        member.updateMember(memberUpdateDto, passwordEncoder);
     }
 
     @Transactional

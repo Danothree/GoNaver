@@ -1,5 +1,6 @@
 package com.dano.kjm.controller;
 
+import com.dano.kjm.dto.request.MemberUpdateDto;
 import com.dano.kjm.dto.request.SignUpDto;
 import com.dano.kjm.dto.response.MemberDetail;
 import com.dano.kjm.service.MemberService;
@@ -56,21 +57,22 @@ public class MemberController {
     }
 
     @PatchMapping
-    public String update(@Valid @RequestBody MemberDetail memberDetail) {
-        memberService.updateMember(memberDetail);
+    public String update(@Valid @RequestBody MemberUpdateDto memberUpdateDto) {
+        memberService.updateMember(memberUpdateDto);
         return "redirect:/";
     }
 
-    @DeleteMapping
-    public String delete(@RequestParam String email) {
+    @DeleteMapping("/{email}")
+    public String delete(@PathVariable("email") String email) {
         memberService.deleteMember(email);
         return "redirect:/";
     }
 
-    @GetMapping("/{id}")
-    public String test(@PathVariable("id") String id){
-        System.out.println(id);
-        return "redirect:/";
+    @GetMapping("/{email}")
+    public String update(@PathVariable("email") String email, Model model){
+        MemberDetail memberDetail = memberService.findMember(email);
+        model.addAttribute("memberDetail", memberDetail);
+        return "member/detail";
     }
 
 }
