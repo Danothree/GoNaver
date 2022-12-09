@@ -1,5 +1,6 @@
 package com.dano.kjm.config;
 
+import com.dano.kjm.config.handler.LoginFailHandler;
 import com.dano.kjm.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -24,6 +26,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl(memberRepository);
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler(){
+        return new LoginFailHandler();
     }
 
     @Bean
@@ -40,7 +47,8 @@ public class SecurityConfig {
                 .passwordParameter("password")
 //                .successForwardUrl("/")
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/members/member/error");
+                .failureHandler(authenticationFailureHandler());
+//                .failureUrl("/members/member/error");
 
         http.logout()
                 .logoutUrl("/logout")
@@ -48,7 +56,8 @@ public class SecurityConfig {
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
         http.authorizeRequests()
-                .mvcMatchers("/", "/members/login", "/members/sign-up", "/items").permitAll()
+                .mvcMatchers("/", "/members/login","/members/login/error",
+                        "/members/sign-up", "/items").permitAll()
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated();
         return http.build();
