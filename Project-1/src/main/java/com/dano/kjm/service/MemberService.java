@@ -4,9 +4,13 @@ import com.dano.kjm.dto.request.MemberUpdateDto;
 import com.dano.kjm.dto.request.SignUpDto;
 import com.dano.kjm.dto.response.MemberDetail;
 import com.dano.kjm.entity.Member;
+import com.dano.kjm.exception.BadParameterException;
 import com.dano.kjm.exception.DuplicatedException;
+import com.dano.kjm.exception.UserNotFoundException;
 import com.dano.kjm.repository.AuthorityRepository;
 import com.dano.kjm.repository.MemberRepository;
+import com.dano.kjm.util.CustomUtil;
+import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,8 +40,10 @@ public class MemberService {
     // 2) 매개변수 email에 대한 유효성 검사 필요
     // 3) MemberDetail.createMemberFormDto 이 메서드명이 의미가 명확하지 않음. MemberFormDto를 만든다는 뜻인지 모룸
     public MemberDetail findMember(String email) {
-        Member member = memberRepository.findByEmail(email).orElse(null);
-        MemberDetail memberDetail = MemberDetail.createMemberFormDto(member);
+        stringCheck(email);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+        MemberDetail memberDetail = MemberDetail.createResponseDto(member);
         return memberDetail;
     }
 
@@ -45,7 +51,9 @@ public class MemberService {
     // 1) 만약 findByEmail을 통해 null값이 반환된다면 member.updateMember() 시 NullPointException 발생
     @Transactional
     public void updateMember(MemberUpdateDto memberUpdateDto) {
-        Member member = memberRepository.findByEmail(memberUpdateDto.getEmail()).orElse(null);
+        objCheck(memberUpdateDto);
+        Member member = memberRepository.findByEmail(memberUpdateDto.getEmail())
+                .orElseThrow(UserNotFoundException::new);
         member.updateMember(memberUpdateDto, passwordEncoder);
     }
 
@@ -53,15 +61,28 @@ public class MemberService {
     // null로 실패했을때, 로그나 예외처리를 통해 Client 또는 사용자에게 예외 상황을 알릴 필요가 있음
     @Transactional
     public void deleteMember(String email) {
-        Member member = memberRepository.findByEmail(email).orElse(null);
+        stringCheck(email);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
         memberRepository.delete(member);
     }
 
     // 잘하면 한줄로 표현 가능
     public void duplicatedCheck(String email) {
-        Member member = memberRepository.findByEmail(email).orElse(null);
-        if(member != null) {
-            throw new DuplicatedException("이미 존재하는 회원입니다.");
+        if(memberRepository.existsByEmail(email)) {
+            throw new DuplicatedException("중복된 이메일입니다.");
+        };
+    }
+
+    public void objCheck(Object object) {
+        if(object == null) {
+            throw new BadParameterException("잘못된 요청입니다.");
+        }
+    }
+
+    public void stringCheck(String str) {
+        if(CustomUtil.isEmpty(str)) {
+            throw new BadParameterException("잘못된 요청입니다.");
         }
     }
 }

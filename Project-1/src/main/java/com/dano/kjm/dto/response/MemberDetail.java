@@ -37,11 +37,10 @@ public class MemberDetail {
     private String detailAddress;
 
     // 1) MemberDetail 에 비밀번호가 같이 가는 것은 좋지 않음, 애초에 이 값은 PasswordEncoder 로 암호화된 값이 반환됨
-    public static MemberDetail createMemberFormDto(Member member) {
+    public static MemberDetail createResponseDto(Member member) {
         return MemberDetail.builder()
                 .email(member.getEmail())
                 .username(member.getUsername())
-                .password(member.getPassword())
                 .phone(member.getPhone())
                 .address(member.getAddress().getAddress())
                 .detailAddress(member.getAddress().getPostalCode())
