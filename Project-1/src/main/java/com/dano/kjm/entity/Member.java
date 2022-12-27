@@ -3,6 +3,8 @@ package com.dano.kjm.entity;
 import com.dano.kjm.constant.Role;
 import com.dano.kjm.dto.request.MemberUpdateDto;
 import com.dano.kjm.dto.request.SignUpDto;
+import com.dano.kjm.entity.basic.BaseTimeEntity;
+import com.dano.kjm.entity.seller.Seller;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,9 @@ public class Member extends BaseTimeEntity {
     private String phone;
     @Embedded
     private Address address;
+
+    @OneToOne(mappedBy = "member")
+    private Seller seller;
 
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Authority> authorities = new ArrayList<>();

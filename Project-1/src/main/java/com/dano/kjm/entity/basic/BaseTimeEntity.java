@@ -1,4 +1,4 @@
-package com.dano.kjm.entity;
+package com.dano.kjm.entity.basic;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
