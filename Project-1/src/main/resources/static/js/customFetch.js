@@ -39,7 +39,7 @@ customFetch = {
         const res = await fetch(url, options);
         const data = res.json();
         if(res.ok) {
-            return data;
+            common.showAlert("완료!");
         } else {
             common.showAlert('통신 장애');
         }
@@ -47,7 +47,10 @@ customFetch = {
 
     //POST
     post : (host, path, body, headers = {}) => {
-        const url = `${host}/${path}`;
+        let url = `${host}`;
+        if(path === '') {
+            url = `${host}/${path}`;
+        }
         const options = {
             method : 'POST',
             headers : {
@@ -60,7 +63,7 @@ customFetch = {
         const res = fetch(url, options);
         const data = res.json();
         if(res.ok) {
-            return data;
+            common.showAlert("완료!");
         } else {
             common.showAlert('통신 장애');
         }

@@ -25,9 +25,10 @@ public class SellerService {
         sellerRepository.save(seller);
     }
 
-    public void deleteSeller(Long id) {
-        Assert.notNull(id, "잘못된 요청입니다.");
-        sellerRepository.deleteById(id);
-
+    public void deleteSeller(String email) {
+        Assert.notNull(email, "잘못된 요청입니다.");
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+        sellerRepository.deleteById(member.getId());
     }
 }

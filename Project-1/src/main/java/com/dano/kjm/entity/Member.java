@@ -9,10 +9,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -58,6 +60,11 @@ public class Member extends BaseTimeEntity {
         this.password = password;
         this.address = Address.create(memberUpdateDto.getAddress(), memberUpdateDto.getDetailAddress());
         this.phone = memberUpdateDto.getPhone();
+    }
+
+    public boolean isSeller() {
+        return authorities.stream()
+                .anyMatch(a -> a.getRole() == Role.SELLER);
     }
 
     private void setEmail(String email) {
