@@ -2,18 +2,22 @@ package com.dano.kjm.service;
 
 import com.dano.kjm.entity.Member;
 import com.dano.kjm.entity.seller.Seller;
+import com.dano.kjm.event.SellerEvent;
 import com.dano.kjm.exception.UserNotFoundException;
 import com.dano.kjm.repository.MemberRepository;
 import com.dano.kjm.repository.SellerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
 public class SellerService {
 
     private final SellerRepository sellerRepository;
+    private final ApplicationEventPublisher publisher;
     private final MemberRepository memberRepository;
 
     public void savedSeller(String email) {
@@ -23,6 +27,7 @@ public class SellerService {
 
         Seller seller = Seller.signUpSeller(member);
         sellerRepository.save(seller);
+        publisher.publishEvent(new SellerEvent(seller.getMember().getUsername()));
     }
 
     public void deleteSeller(String email) {

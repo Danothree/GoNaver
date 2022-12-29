@@ -4,24 +4,25 @@ import com.dano.kjm.config.handler.LoginFailHandler;
 import com.dano.kjm.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final MemberRepository memberRepository;
+//    private final DataSource dataSource;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -55,6 +56,11 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
+//        http.rememberMe()
+//                .rememberMeParameter("remember-me")
+//                .userDetailsService(userDetailsService())
+//                .tokenRepository(tokenRepository());
+
         http.authorizeRequests()
                 .mvcMatchers("/", "/members/login","/members/login/error",
                         "/members/sign-up", "/items").permitAll()
@@ -62,6 +68,14 @@ public class SecurityConfig {
                 .anyRequest().authenticated();
         return http.build();
     }
+
+//    @Bean
+//    public PersistentTokenRepository tokenRepository() {
+//        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+//        jdbcTokenRepository.setDataSource(dataSource);
+//
+//        return jdbcTokenRepository;
+//    }
 
     @Bean
     @Order(0)
