@@ -53,8 +53,8 @@ public class SecurityConfig {
 
         http.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+                .logoutSuccessUrl("/");
+//                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
 //        http.rememberMe()
 //                .rememberMeParameter("remember-me")

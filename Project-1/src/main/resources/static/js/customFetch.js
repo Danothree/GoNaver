@@ -38,7 +38,7 @@ customFetch = {
         const options = {
             method : 'POST',
             headers : {
-                'ContentType' : 'application/json',
+                'Content-Type' : 'application/json',
                 ...headers,
             },
             body : body,
@@ -61,7 +61,7 @@ customFetch = {
         const options = {
             method : 'POST',
             headers : {
-                'ContentType' : 'application/json',
+                'Content-Type' : 'application/json',
                 ...headers,
             },
             body : body,
