@@ -38,7 +38,7 @@ public class Seller extends BaseTimeEntity {
         return seller;
     }
 
-    public void setMember(Member member) {
+    private void setMember(Member member) {
         this.member = member;
     }
 }

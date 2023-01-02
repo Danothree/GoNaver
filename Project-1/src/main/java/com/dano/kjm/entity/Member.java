@@ -4,6 +4,7 @@ import com.dano.kjm.constant.Role;
 import com.dano.kjm.dto.request.MemberUpdateDto;
 import com.dano.kjm.dto.request.SignUpDto;
 import com.dano.kjm.entity.basic.BaseTimeEntity;
+import com.dano.kjm.entity.order.Order;
 import com.dano.kjm.entity.seller.Seller;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,8 +34,11 @@ public class Member extends BaseTimeEntity {
     @Embedded
     private Address address;
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private Seller seller;
+
+    @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Authority> authorities = new ArrayList<>();

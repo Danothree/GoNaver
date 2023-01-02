@@ -20,4 +20,9 @@ public class Category {
 
     @Enumerated(EnumType.STRING)
     private ItemType itemType;
+
+    public void addCategoryItems(CategoryItem categoryItem) {
+        categoryItems.add(categoryItem);
+        categoryItem.setCategory(this);
+    }
 }
