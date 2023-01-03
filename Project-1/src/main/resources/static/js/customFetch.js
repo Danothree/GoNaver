@@ -1,62 +1,30 @@
-customFetch = {
+class CustomFetch {
 
-    //동기화 GET
-    asyncGet : async (host, path) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
-        }
-        const res = await fetch(url);
-        const data = res.json();
-        if(res.ok) {
-            return data;
-        } else {
-            common.showAlert("통신 실패.",'error');
-        }
-    },
+    constructor(host, path) {
+        this.host = host;
+        this.path = path;
+    }
 
     //GET
-    get : (host, path) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
+    async get() {
+        let url = this.host;
+        if(this.path !== '') {
+            url = `${this.host}/${this.path}`;
         }
-        const res = fetch(url);
+        const res = await fetch(url);
         if(res.ok) {
-            common.showAlert("완료!");
+            new Common().showAlert("완료!");
+            return res.json();
         } else {
-            common.showAlert("통신 실패.",'error');
+            new Common().showAlert("통신 실패.",'error');
         }
-    },
-
-    //동기화 POST
-    asyncPost : async (host, path, body, headers = {}) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
-        }
-        const options = {
-            method : 'POST',
-            headers : {
-                'Content-Type' : 'application/json',
-                ...headers,
-            },
-            body : body,
-
-        };
-        const res = await fetch(url, options);
-        if(res.ok) {
-            common.showAlert("완료!");
-        } else {
-            common.showAlert('통신 장애','error');
-        }
-    },
+    }
 
     //POST
-    post : (host, path, body, headers = {}) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
+    async post(body, headers = {}) {
+        let url = this.host;
+        if(this.path !== '') {
+            url = `${this.host}/${this.path}`;
         }
         const options = {
             method : 'POST',
@@ -67,41 +35,20 @@ customFetch = {
             body : body,
 
         };
-        const res = fetch(url, options);
-        if(res.ok) {
-            common.showAlert("완료!");
-        } else {
-            common.showAlert('통신 장애','error');
-        }
-    },
-
-    //동기화 PATCH
-    asyncPatch : async (host, path, body, headers = {}) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
-        }
-        const options = {
-            method : 'PATCH',
-            headers : {
-                'ContentType' : 'application/json',
-                ...headers,
-            },
-            body : body,
-        };
         const res = await fetch(url, options);
         if(res.ok) {
-            common.showAlert("완료!");
+            new Common().showAlert("완료!");
+            return res.json();
         } else {
-            common.showAlert('수정 실패','error');
+            new Common().showAlert('통신 장애','error');
         }
-    },
+    }
 
     //PATCH
-    patch : (host, path, body, headers = {}) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
+    async patch(body, headers = {}) {
+        let url = this.host;
+        if(this.path !== '') {
+            url = `${this.host}/${this.path}`;
         }
         const options = {
             method : 'PATCH',
@@ -111,19 +58,20 @@ customFetch = {
             },
             body : body,
         };
-        const res = fetch(url, options);
+        const res = await fetch(url, options);
         if(res.ok) {
-            common.showAlert("완료!");
+            new Common().showAlert("완료!");
+            return res.json();
         } else {
-            common.showAlert('수정 실패','error');
+            new Common().showAlert('수정 실패','error');
         }
-    },
+    }
 
-    //동기화 DELETE
-    asyncDelete : async (host, path, body, headers = {}) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
+    //DELETE
+    async delete(body, headers = {}) {
+        let url = this.host;
+        if(this.path !== '') {
+            url = `${this.host}/${this.path}`;
         }
         const options = {
             method : 'DELETE',
@@ -131,35 +79,14 @@ customFetch = {
                 'Content-Type' : 'application/json',
                 ...headers,
             },
-            body : JSON.stringify(body),
+            body : body,
         };
         const res = await fetch(url, options);
         if(res.ok) {
-            common.showAlert("완료!");
+            new Common().showAlert("완료!");
+            return res.json();
         } else {
-            common.showAlert('삭제 실패','error');
+            new Common().showAlert('삭제 실패','error');
         }
-    },
-
-    //DELETE
-    delete : (host, path, body, headers = {}) => {
-        let url = `${host}`;
-        if(path !== '') {
-            url = `${host}/${path}`;
-        }
-        const options = {
-            method : 'DELETE',
-            headers : {
-                'Content-Type' : 'application/json',
-                ...headers,
-            },
-            body : JSON.stringify(body),
-        };
-        const res = fetch(url, options);
-        if(res.ok) {
-            common.showAlert("완료!");
-        } else {
-            common.showAlert('삭제 실패','error');
-        }
-    },
+    }
 }
