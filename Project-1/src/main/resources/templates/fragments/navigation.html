@@ -22,6 +22,7 @@
                                 <li><a class="dropdown-item btn btn-outline-dark" href="#!">주문 및 배송 조회</a></li>
                                 <li><a class="dropdown-item btn btn-outline-dark" href="#!">쿠폰</a></li>
                                 <li><a class="dropdown-item btn btn-outline-dark" th:onclick="seller.author([[${#authentication.getName()}]]);" sec:authorize="!hasAnyAuthority('SELLER')">판매자 신청</a></li>
+                                <li><a class="dropdown-item btn btn-outline-dark" href="/sellers/" sec:authorize="hasAnyAuthority('SELLER')"><i class="bi bi-award-fill"></i>판매자 페이지</a></li>
                             </ul>
                             <span id="emailChk" style="display: none;" th:value="${#authentication.getName()}"></span>
                         </li>

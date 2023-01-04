@@ -5,7 +5,6 @@ import com.dano.kjm.constant.OrderStatus;
 import com.dano.kjm.entity.Member;
 import com.dano.kjm.entity.basic.BaseTimeEntity;
 import lombok.Getter;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
