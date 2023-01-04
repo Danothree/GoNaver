@@ -1,10 +1,11 @@
 package com.dano.kjm.service;
 
-import com.dano.kjm.dto.request.SignUpDto;
-import com.dano.kjm.entity.Member;
-import com.dano.kjm.exception.DuplicatedException;
-import com.dano.kjm.repository.AuthorityRepository;
-import com.dano.kjm.repository.MemberRepository;
+import com.dano.kjm.domain.member.dto.request.SignUpDto;
+import com.dano.kjm.domain.member.entity.Member;
+import com.dano.kjm.domain.member.exception.MemberDuplicatedException;
+import com.dano.kjm.domain.member.application.MemberService;
+import com.dano.kjm.domain.member.dao.AuthorityRepository;
+import com.dano.kjm.domain.member.dao.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,12 +61,12 @@ class MemberServiceTest {
         when(memberRepository.findByEmail(any())).thenReturn(Optional.of(new Member()));
 
         // when
-        DuplicatedException duplicatedException = assertThrows(DuplicatedException.class, () -> {
+        MemberDuplicatedException memberDuplicatedException = assertThrows(MemberDuplicatedException.class, () -> {
             target.saveMember(createSignUpDto());
         });
 
         //then
-        assertThat(duplicatedException.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+        assertThat(memberDuplicatedException.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
     }
 
     @Test
