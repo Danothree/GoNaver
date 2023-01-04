@@ -8,7 +8,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-
+<!--                    <li class="nav-item" sec:authorize="isAuthenticated()" th:text="${#authentication.getName()}"></li>-->
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/members/sign-up" sec:authorize="isAnonymous()" >Sign Up</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/members/login" sec:authorize="isAnonymous()">LogIn</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/logout" sec:authorize="isAuthenticated()">LogOut</a></li>
@@ -21,9 +21,12 @@
                                 <li><a class="dropdown-item btn btn-outline-dark" th:href="@{'/cart'}"><i class="bi-cart-fill me-1"></i>장바구니</a></li>
                                 <li><a class="dropdown-item btn btn-outline-dark" href="#!">주문 및 배송 조회</a></li>
                                 <li><a class="dropdown-item btn btn-outline-dark" href="#!">쿠폰</a></li>
+                                <li><a class="dropdown-item btn btn-outline-dark" th:onclick="seller.author([[${#authentication.getName()}]]);" sec:authorize="!hasAnyAuthority('SELLER')">판매자 신청</a></li>
+                                <li><a class="dropdown-item btn btn-outline-dark" href="/sellers/" sec:authorize="hasAnyAuthority('SELLER')"><i class="bi bi-award-fill"></i>판매자 페이지</a></li>
                             </ul>
+                            <span id="emailChk" style="display: none;" th:value="${#authentication.getName()}"></span>
                         </li>
-                    </ul>
+                    </ul>Ï
                  </ul>
             </div>
         </div>

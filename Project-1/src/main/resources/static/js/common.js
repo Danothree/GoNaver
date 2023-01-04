@@ -1,15 +1,16 @@
-const common = {
-    nullCheck : (data,...list) => {
+class Common {
 
+    nullCheck(data,...list) {
         for (let i = 0; i < list.length; i++) {
             if(data[list[i]] == undefined || data[list[i]] == "") {
-                common.showAlert('정보를 다 입력해주세요','warning');
+                this.showAlert('정보를 다 입력해주세요','warning');
                 return true;
             }
         }
         return false;
-    },
-    showAlert : (title, option, url) => {
+    }
+
+    showAlert(title, option, url) {
         let i = option ? option : 'success';
         const defaultOption = {
             title : title,
@@ -25,8 +26,9 @@ const common = {
                     document.location.href = url;
                 }
             })
-    },
-    confirm : (title, func) => {
+    }
+
+    confirm(title, func) {
         const defaultOption = {
             icon : 'warning',
             title : title,
@@ -43,8 +45,9 @@ const common = {
                     func();
                 }
             });
-    },
-    serialize : (rawData) => {
+    }
+
+    serialize(rawData) {
         let result = {};
 
         for(let [key, val] of rawData) {

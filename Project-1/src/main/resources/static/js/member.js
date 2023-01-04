@@ -3,8 +3,8 @@ const member = {
     //회원 수정
     update : async (formData) => {
         let data = new FormData(formData);
-        let serializeData = common.serialize(data);
-        const nullCheck = common.nullCheck(serializeData, 'username','email','password','phone','address','detailAddress');
+        let serializeData = new Common().serialize(data);
+        const nullCheck = new Common().nullCheck(serializeData, 'username','email','password','phone','address','detailAddress');
         if(nullCheck) {
             return false;
         }
@@ -19,13 +19,13 @@ const member = {
         };
         const res = await fetch('/members', options);
         if (res.redirected) {
-            common.showAlert('수정 완료!','success', res.url);
+            new Common().showAlert('수정 완료!','success', res.url);
         }
     },
 
     //회원 탈퇴
     delete : () => {
-        common.confirm('정말로 탈퇴하시겠습니까?', async () => {
+        new Common().confirm('정말로 탈퇴하시겠습니까?', async () => {
             const email = document.getElementById('email').value;
             const options = {
                 method : 'DELETE',
@@ -33,7 +33,7 @@ const member = {
             };
             const res = await fetch('/members/'+email, options);
             if(res.redirected) {
-                common.showAlert('탈퇴 완료!', 'success', '/logout');
+                new Common().showAlert('탈퇴 완료!', 'success', '/logout');
             };
         });
     },
@@ -43,7 +43,7 @@ const member = {
         const pw1 = document.querySelector('#password').value;
         const pw2 = document.querySelector('#passwordCheck').value;
         if(pw1 != pw2) {
-            common.showAlert('비밀번호를 확인해주세요.');
+            new Common().showAlert('비밀번호를 확인해주세요.');
             return false;
         } else {
             return true;
@@ -56,7 +56,7 @@ const member = {
             email : document.getElementById('email').value,
             password : document.getElementById('password').value
         };
-        common.nullCheck(formData,'email', 'password');
+        new Common().nullCheck(formData,'email', 'password');
     },
 
     //우편 검색
