@@ -1,5 +1,6 @@
 package com.dano.kjm.domain.item.entity;
 
+import com.dano.kjm.domain.common.entity.BaseEntity;
 import com.dano.kjm.domain.item.dto.request.ItemUpdateDto;
 import com.dano.kjm.domain.common.entity.BaseTimeEntity;
 import com.dano.kjm.domain.order.entity.OrderItem;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Item extends BaseTimeEntity {
+public class Item extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")

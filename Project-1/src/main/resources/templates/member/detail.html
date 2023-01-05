@@ -69,7 +69,7 @@
 
                     <div class="mb-3">
                         <label for="address">주소 <input type="button" class="btn btn-default btn-sm" onclick="member.getPostCode();" value="*우편번호 찾기"><br></label>
-                        <input type="text" class="form-control" id="address"  th:field=*{address} placeholder="우편번호 찾기를 눌러주세요" readonly>
+                        <input type="text" class="form-control" id="address"  th:field="*{address}" placeholder="우편번호 찾기를 눌러주세요" readonly>
                         <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">empty</p>
                         <div class="invalid-feedback signupError">
                             주소를 입력해주세요.
@@ -78,7 +78,7 @@
 
                     <div class="mb-3">
                         <label for="detailAddress">상세주소</label>
-                        <input type="text" class="form-control" id="detailAddress" th:field=*{detailAddress} placeholder="상세주소를 입력해주세요." required>
+                        <input type="text" class="form-control" id="detailAddress" th:field="*{detailAddress}" placeholder="상세주소를 입력해주세요." required>
                         <p th:if="${#fields.hasErrors('detailAddress')}" th:errors="*{detailAddress}" class="fieldError">
                             <div class="invalid-feedback signupError">
                                 상세 주소를 입력해주세요.
