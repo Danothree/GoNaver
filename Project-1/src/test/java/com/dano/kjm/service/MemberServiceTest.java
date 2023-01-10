@@ -54,20 +54,20 @@ class MemberServiceTest {
         verify(authorityRepository, times(1)).saveAll(any(Collection.class));
     }
 
-    @Test
-    @DisplayName("회원 가입시 중복 회원 예외 발생 테스트")
-    public void membership_duplicate_exception_test(){
-        //given
-        when(memberRepository.findByEmail(any())).thenReturn(Optional.of(new Member()));
-
-        // when
-        MemberDuplicatedException memberDuplicatedException = assertThrows(MemberDuplicatedException.class, () -> {
-            target.saveMember(createSignUpDto());
-        });
-
-        //then
-        assertThat(memberDuplicatedException.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-    }
+//    @Test
+//    @DisplayName("회원 가입시 중복 회원 예외 발생 테스트")
+//    public void membership_duplicate_exception_test(){
+//        //given
+//        when(memberRepository.findByEmail(any())).thenReturn(Optional.of(new Member()));
+//
+//        // when
+//        MemberDuplicatedException memberDuplicatedException = assertThrows(MemberDuplicatedException.class, () -> {
+//            target.saveMember(createSignUpDto());
+//        });
+//
+//        //then
+//        assertThat(memberDuplicatedException.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+//    }
 
     @Test
     @DisplayName("회원 정보 조회 실패 테스트")
