@@ -19,8 +19,8 @@
 
 ### 기능
 - 판매자 신청
-  - api : POST /seller
-  - table : (apply_sell) memberId, confirm, insertDt 
+  - api : POST /seller (핸드폰문자로 인증받기 구현)
+  - table : (apply_seller_log) memberId, confirm, insertDt 
 - 비밀번호 변경
 - 판매자 페이지(메인페이지 현황)
     - 판매자
@@ -46,6 +46,8 @@
       - api : GET /items/{page}
     - 개수, 장바구니, 구매
     - 상품평, 문의
+  - 상품 판매등록
+    - 이미지, 이름, 가격, 상세정보, 수량, size, 카테고리
 - 장바구니
     - 상품 선택 및 개수 변경
     - 상품 삭제

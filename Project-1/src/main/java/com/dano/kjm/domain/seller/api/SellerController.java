@@ -1,10 +1,13 @@
 package com.dano.kjm.domain.seller.api;
 
+import com.dano.kjm.domain.item.dto.request.ItemAddDto;
+import com.dano.kjm.domain.item.entity.Item;
 import com.dano.kjm.domain.member.application.MemberService;
 import com.dano.kjm.domain.member.dto.response.MemberDetail;
 import com.dano.kjm.domain.member.entity.Member;
 import com.dano.kjm.domain.seller.application.SellerService;
 import com.dano.kjm.domain.seller.entity.Seller;
+import com.dano.kjm.domain.seller.entity.SellerItem;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -38,5 +41,11 @@ public class SellerController {
         model.addAttribute("member", member);
         model.addAttribute("seller", seller);
         return "seller/seller";
+    }
+
+    @GetMapping("/popup")
+    public String popup(Model model) {
+        model.addAttribute("item", new ItemAddDto());
+        return "seller/sellPopup";
     }
 }

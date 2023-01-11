@@ -1,6 +1,6 @@
 class Common {
 
-    nullCheck(data,...list) {
+    static nullCheck(data,...list) {
         for (let i = 0; i < list.length; i++) {
             if(data[list[i]] == undefined || data[list[i]] == "") {
                 this.showAlert('정보를 다 입력해주세요','warning');
@@ -10,7 +10,7 @@ class Common {
         return false;
     }
 
-    showAlert(title, option, url) {
+    static showAlert(title, option, url) {
         let i = option ? option : 'success';
         const defaultOption = {
             title : title,
@@ -28,7 +28,7 @@ class Common {
             })
     }
 
-    confirm(title, func) {
+    static confirm(title, func) {
         const defaultOption = {
             icon : 'warning',
             title : title,
@@ -47,7 +47,7 @@ class Common {
             });
     }
 
-    serialize(rawData) {
+    static serialize(rawData) {
         let result = {};
 
         for(let [key, val] of rawData) {

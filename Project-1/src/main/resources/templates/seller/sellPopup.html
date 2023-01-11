@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/popupLayout}">
+<body>
+<th:block layout:fragment="script">
+
+</th:block>
+<div layout:fragment="content">
+    <!-- Product section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+                <div class="col-md-6">
+                    <div class="display-5 fw-bolder mb-5">상품 추가</div>
+                    <form th:object="${item}">
+                        <div style="width: 400px;">
+                            <label for="name" class="mb-5">상품 명 :<span>&nbsp;&nbsp;&nbsp;</span>
+                                <input type="text" id="name" th:field="*{name}" style="width:300px; margin-left: 0px;">
+                            </label><br>
+                            <label for="price" class="mb-5">가격 :<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <input type="text" id="price" th:field="*{price}" style="width:300px; margin-left: 0px;">
+                            </label><br>
+                            <label for="stockQuantity" class="mb-5">판매 수량 :
+                                <input type="text" id="stockQuantity" th:field="*{stockQuantity}" style="width:300px; margin-left: 0px;" >
+                            </label><br>
+                            <label for="itemDetail">상품 설명 :
+                                <input type="text" id="itemDetail" class="mb-5 lead" th:field="*{itemDetail}" style="width:300px;height:200px;font-size:15px; margin-left: 0px;">
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
