@@ -11,27 +11,48 @@
     <!-- Product section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
+            <div class="display-5 border-5 my-5" style="text-align: center; margin-bottom: 10px; font-size: 30px;">상품 추가</div>
             <div class="row gx-4 gx-lg-5 align-items-center">
-                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
-                <div class="col-md-6">
-                    <div class="display-5 fw-bolder mb-5">상품 추가</div>
-                    <form th:object="${item}">
+                <input type="hidden" th:if="${errorMessage}" th:value="${errorMessage}" id="errorMessage">
+                <form th:object="${itemAddDto}" class="col-md-12" id="sellAddItemForm" method="post" enctype="multipart/form-data" th:action="@{/seller/}">
+                    <div class="col-md-6">
                         <div style="width: 400px;">
-                            <label for="name" class="mb-5">상품 명 :<span>&nbsp;&nbsp;&nbsp;</span>
-                                <input type="text" id="name" th:field="*{name}" style="width:300px; margin-left: 0px;">
-                            </label><br>
-                            <label for="price" class="mb-5">가격 :<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <input type="text" id="price" th:field="*{price}" style="width:300px; margin-left: 0px;">
-                            </label><br>
-                            <label for="stockQuantity" class="mb-5">판매 수량 :
-                                <input type="text" id="stockQuantity" th:field="*{stockQuantity}" style="width:300px; margin-left: 0px;" >
-                            </label><br>
-                            <label for="itemDetail">상품 설명 :
-                                <input type="text" id="itemDetail" class="mb-5 lead" th:field="*{itemDetail}" style="width:300px;height:200px;font-size:15px; margin-left: 0px;">
-                            </label>
+                            <div class="">
+                                <label for="chooseFile">
+                                    👉 CLICK HERE! 👈
+                                </label>
+                            </div>
+                            <input type="file" id="chooseFile" accept="image/*" onchange="Seller.loadFile(this)">
+                            <div class="fileContainer">
+                                <p>파일 명 : </p>
+                                <p id="fileName"></p>
+                            </div>
+                            <div class="buttonContainer">
+                                <div class="submitButtton" id="submitButton">저장</div>
+                            </div>
+                            <div class="image-show" id="image-show"></div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="col-md-6">
+                            <div style="width: 400px;">
+                                <label for="name" class="mb-5">상품 명 :<span>&nbsp;&nbsp;&nbsp;</span>
+                                    <input type="text" id="name" th:field="*{name}" style="width:300px; margin-left: 0px;">
+                                </label><br>
+                                <label for="price" class="mb-5">가격 :<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <input type="text" id="price" th:field="*{price}" style="width:300px; margin-left: 0px;">
+                                </label><br>
+                                <label for="stockQuantity" class="mb-5">판매 수량 :
+                                    <input type="text" id="stockQuantity" th:field="*{stockQuantity}" style="width:300px; margin-left: 0px;" >
+                                </label><br>
+                                <label for="itemDetail">상품 설명 :
+                                    <input type="text" id="itemDetail" class="mb-5 lead" th:field="*{itemDetail}" style="width:300px;height:200px;font-size:15px; margin-left: 0px;">
+                                </label>
+                                <input type="hidden" th:field="*{email}" th:value="${#authentication.getName()}">
+                            </div>
+                            <input type="button" class="btn btn-primary btn-lg btn-block" th:value="등록">
+                            <input type="button" class="btn btn-primary btn-lg btn-block" th:value="취소" onclick="window.close();">
+                    </div>
+                </form>
             </div>
         </div>
     </section>

@@ -15,6 +15,26 @@ class Seller {
     }
 
     static openItemDetail() {
-        window.open('http://localhost:8088/seller/popup','_blank','width=150px,height=150px,toolbars=no,scrollbars=no');
+        window.open('http://localhost:8088/seller/popup','_blank','width=800px,height=800px,toolbars=no,scrollbars=no');
+    }
+
+    static loadFile(input) {
+        let file = input.files[0];
+
+        let name = document.getElementById('fileName');
+        name.textContent = file.name;
+
+        let newImg = document.createElement('img');
+        newImg.setAttribute('class', 'img')
+
+        newImg.src = URL.createObjectURL(file);
+
+        newImg.style.width = '70%';
+        newImg.style.height = '70%';
+        newImg.style.visibility = 'hidden';
+        newImg.style.objectFit = 'contain';
+
+        let container = document.getElementById('image-show');
+        container.appendChild(newImg);
     }
 }
