@@ -14,6 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -51,12 +55,12 @@ public class SecurityConfig {
 
         http.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/");
-//                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+                .logoutSuccessUrl("/")
+                        .invalidateHttpSession(false);
 
-//        http.rememberMe()
-//                .rememberMeParameter("remember-me")
-//                .userDetailsService(userDetailsService())
+        http.rememberMe()
+                .rememberMeParameter("remember-me")
+                .userDetailsService(userDetailsService());
 //                .tokenRepository(tokenRepository());
 
         http.authorizeRequests()

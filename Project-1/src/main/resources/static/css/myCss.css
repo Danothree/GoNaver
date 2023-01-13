@@ -62,3 +62,26 @@ html, body {
 .margin-none {
     margin-bottom: -20px;
 }
+
+.wrapper {
+    text-align: center;
+    flex-grow: 1;
+}
+
+#imageBox {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin: 20px auto;
+}
+
+.upload-btn {
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    display: inline-block;
+    cursor: pointer;
+}
+input[type=file] {
+    display: none;
+}

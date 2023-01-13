@@ -15,26 +15,19 @@ class Seller {
     }
 
     static openItemDetail() {
-        window.open('http://localhost:8088/seller/popup','_blank','width=800px,height=800px,toolbars=no,scrollbars=no');
+        window.open('http://localhost:8088/items/popup','_blank','width=1000px,height=800px,toolbars=no,scrollbars=no');
     }
 
-    static loadFile(input) {
-        let file = input.files[0];
+    static loadFile() {
+        const previews = document.querySelector('#imageBox');
 
-        let name = document.getElementById('fileName');
-        name.textContent = file.name;
+        const fileDOM = document.querySelector('#itemImgFile');
 
-        let newImg = document.createElement('img');
-        newImg.setAttribute('class', 'img')
-
-        newImg.src = URL.createObjectURL(file);
-
-        newImg.style.width = '70%';
-        newImg.style.height = '70%';
-        newImg.style.visibility = 'hidden';
-        newImg.style.objectFit = 'contain';
-
-        let container = document.getElementById('image-show');
-        container.appendChild(newImg);
+        fileDOM.addEventListener('change', () => {
+            const imageSrc = URL.createObjectURL(fileDOM.files[0]);
+            previews.src = imageSrc;
+            // URL.revokeObjectURL(imageSrc);
+        });
     }
 }
+

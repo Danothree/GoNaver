@@ -1,10 +1,12 @@
 package com.dano.kjm.domain.item.entity;
 
 import com.dano.kjm.domain.common.entity.BaseEntity;
+import com.dano.kjm.domain.item.dto.request.ItemAddDto;
 import com.dano.kjm.domain.item.dto.request.ItemUpdateDto;
 import com.dano.kjm.domain.common.entity.BaseTimeEntity;
 import com.dano.kjm.domain.order.entity.OrderItem;
 import com.dano.kjm.global.error.exception.BadParameterException;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Item extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +57,17 @@ public class Item extends BaseEntity {
         this.price = price;
         this.stockQuantity = stockQuantity;
     }
+
+    public static Item createItem(ItemAddDto itemAddDto) {
+        Item item = new Item();
+        item.name = itemAddDto.getName();
+        item.price = itemAddDto.getPrice();
+        item.itemStatus = ItemStatus.SALE;
+        item.itemDetail = itemAddDto.getItemDetail();
+
+        return item;
+    }
+
     public void addStock(int quantity) {
         this.stockQuantity += quantity;
     }

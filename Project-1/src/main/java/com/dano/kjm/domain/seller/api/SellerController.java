@@ -43,9 +43,4 @@ public class SellerController {
         return "seller/seller";
     }
 
-    @GetMapping("/popup")
-    public String popup(Model model) {
-        model.addAttribute("itemAddDto", new ItemAddDto());
-        return "seller/sellPopup";
-    }
 }

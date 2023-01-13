@@ -14,27 +14,33 @@
             <div class="display-5 border-5 my-5" style="text-align: center; margin-bottom: 10px; font-size: 30px;">상품 추가</div>
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <input type="hidden" th:if="${errorMessage}" th:value="${errorMessage}" id="errorMessage">
-                <form th:object="${itemAddDto}" class="col-md-12" id="sellAddItemForm" method="post" enctype="multipart/form-data" th:action="@{/seller/}">
+                <form th:object="${itemAddDto}" class="col-md-12" enctype="multipart/form-data" th:action method="post">
                     <div class="col-md-6">
                         <div style="width: 400px;">
-                            <div class="">
-                                <label for="chooseFile">
-                                    👉 CLICK HERE! 👈
-                                </label>
+                            <div class="flex-container">
+                                <div class="wrapper">
+                                    <h2>상품 사진</h2>
+                                    <img src="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg" id="imageBox" />
+                                    <label for="itemImgFile" class="upload-btn">
+                                        <input id="itemImgFile" name="itemImgFile" type="file" accept="image/*" onclick="Seller.loadFile();"/>
+                                        <span>Upload Image</span>
+                                    </label>
+                                </div>
                             </div>
-                            <input type="file" id="chooseFile" accept="image/*" onchange="Seller.loadFile(this)">
-                            <div class="fileContainer">
-                                <p>파일 명 : </p>
-                                <p id="fileName"></p>
-                            </div>
-                            <div class="buttonContainer">
-                                <div class="submitButtton" id="submitButton">저장</div>
-                            </div>
-                            <div class="image-show" id="image-show"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
                             <div style="width: 400px;">
+                                <span>카테고리 선택 :&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" id="TOP" name="itemType">
+                                    <label for="TOP"><span></span>모자</label>
+                                    <input type="radio" id="PANTS" name="itemType">
+                                    <label for="PANTS"><span></span>바지</label>
+                                    <input type="radio" id="OUTER" name="itemType">
+                                    <label for="OUTER"><span></span>상의</label>
+                                    <input type="radio" id="ACCESSORY" name="itemType">
+                                    <label for="ACCESSORY"><span></span>악세사리</label>
+                                </span>
                                 <label for="name" class="mb-5">상품 명 :<span>&nbsp;&nbsp;&nbsp;</span>
                                     <input type="text" id="name" th:field="*{name}" style="width:300px; margin-left: 0px;">
                                 </label><br>
@@ -49,7 +55,7 @@
                                 </label>
                                 <input type="hidden" th:field="*{email}" th:value="${#authentication.getName()}">
                             </div>
-                            <input type="button" class="btn btn-primary btn-lg btn-block" th:value="등록">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" th:value="등록">
                             <input type="button" class="btn btn-primary btn-lg btn-block" th:value="취소" onclick="window.close();">
                     </div>
                 </form>

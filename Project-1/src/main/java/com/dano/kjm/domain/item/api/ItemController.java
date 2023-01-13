@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -24,20 +25,25 @@ public class ItemController {
         return "items";
     }
 
-    @PostMapping
-    @ResponseBody
-    public String addSellItem(@Valid @RequestBody ItemAddDto itemAddDto, BindingResult bindingResult, Model model) {
+    @PostMapping("/popup")
+    public String addSellItem(@Valid ItemAddDto itemAddDto, BindingResult bindingResult, Model model, @RequestParam MultipartFile itemImgFile) {
 
         if(bindingResult.hasErrors()) {
-            return "seller/sellPopup";
+            return "item/sellPopup";
         }
 
         try {
-
+            itemService.saveItem(itemAddDto, itemImgFile);
         } catch (Exception e) {
             log.error("error {}",e);
             model.addAttribute("errorMessage", e.getMessage());
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/popup")
+    public String popup(Model model) {
+        model.addAttribute("itemAddDto", new ItemAddDto());
+        return "item/itemPopup";
     }
 }
