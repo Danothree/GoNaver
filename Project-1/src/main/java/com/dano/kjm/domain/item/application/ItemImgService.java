@@ -34,7 +34,7 @@ public class ItemImgService {
 
         if (!CustomUtil.isEmpty(oriImgName)) {
             imgName = fileService.uploadImg(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            imgUrl = "/images/item" + imgName;
+            imgUrl = "/images/item/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
         itemImgRepository.save(itemImg);
