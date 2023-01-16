@@ -14,7 +14,7 @@
             <div class="display-5 border-5 my-5" style="text-align: center; margin-bottom: 10px; font-size: 30px;">상품 추가</div>
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <input type="hidden" th:if="${errorMessage}" th:value="${errorMessage}" id="errorMessage">
-                <form th:object="${itemAddDto}" class="col-md-12" enctype="multipart/form-data" th:action method="post">
+                <form th:object="${itemAddDto}" class="col-md-12" enctype="multipart/form-data" th:action method="post" onsubmit="return Seller.imageCheck();">
                     <div class="col-md-6">
                         <div style="width: 400px;">
                             <div class="flex-container">
@@ -43,17 +43,21 @@
                                 </span>
                                 <label for="name" class="mb-5">상품 명 :<span>&nbsp;&nbsp;&nbsp;</span>
                                     <input type="text" id="name" th:field="*{name}" style="width:300px; margin-left: 0px;">
+                                    <p th:errors="*{name}" class="fieldError"></p>
                                 </label><br>
                                 <label for="price" class="mb-5">가격 :<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <input type="text" id="price" th:field="*{price}" style="width:300px; margin-left: 0px;">
+                                    <p th:erros="*{price}" class="fieldError"></p>
                                 </label><br>
                                 <label for="stockQuantity" class="mb-5">판매 수량 :
                                     <input type="text" id="stockQuantity" th:field="*{stockQuantity}" style="width:300px; margin-left: 0px;" >
+                                    <p th:erros="*{stockQuantity}" class="fieldError"></p>
                                 </label><br>
                                 <label for="itemDetail">상품 설명 :
                                     <input type="text" id="itemDetail" class="mb-5 lead" th:field="*{itemDetail}" style="width:300px;height:200px;font-size:15px; margin-left: 0px;">
+                                    <p th:erros="*{itemDetail}" class="fieldError"></p>
                                 </label>
-                                <input type="hidden" th:field="*{email}" th:value="${#authentication.getName()}">
+                                <input type="hidden" id="email" name="email" th:value="${#authentication.getName()}">
                             </div>
                             <input type="submit" class="btn btn-primary btn-lg btn-block" th:value="등록">
                             <input type="button" class="btn btn-primary btn-lg btn-block" th:value="취소" onclick="window.close();">

@@ -29,7 +29,7 @@ public class ItemController {
     public String addSellItem(@Valid ItemAddDto itemAddDto, BindingResult bindingResult, Model model, @RequestParam MultipartFile itemImgFile) {
 
         if(bindingResult.hasErrors()) {
-            return "item/sellPopup";
+            return "item/itemPopup";
         }
 
         try {

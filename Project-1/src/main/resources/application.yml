@@ -5,6 +5,8 @@ spring:
 server:
   port: 8088
 
+custom:
+  itemImgLocation: C:/shop/item
 #spring security
 
 spring:
@@ -18,9 +20,9 @@ spring:
     cache: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gonaver?serverTimezone=UTC
+    url: jdbc:mysql://localhost:4406/gonaver?serverTimezone=UTC
     username: 'root'
-    password: Password!
+    password: 'root'
   jpa:
     hibernate:
       ddl-auto: update

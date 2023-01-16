@@ -30,4 +30,12 @@ public class ItemImg extends BaseEntity {
         this.imgName = imgName;
         this.imgUrl = imgUrl;
     }
+
+    public void itemCreate(Item item) {
+        this.item = item;
+    }
+
+    public void setImgYn(String yn) {
+        this.imgYn = yn;
+    }
 }

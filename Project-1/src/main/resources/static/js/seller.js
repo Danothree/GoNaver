@@ -29,5 +29,14 @@ class Seller {
             // URL.revokeObjectURL(imageSrc);
         });
     }
+
+    static imageCheck() {
+        const fileDOM = document.querySelector('#itemImgFile');
+        if(fileDOM.value === "") {
+            new Common().showAlert('상품 이미지는 필수입니다.','warning');
+            return false;
+        }
+        return true;
+    }
 }
 
