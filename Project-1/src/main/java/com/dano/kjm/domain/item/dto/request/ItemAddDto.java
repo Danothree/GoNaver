@@ -1,18 +1,17 @@
 package com.dano.kjm.domain.item.dto.request;
 
-import com.dano.kjm.domain.item.entity.CategoryItem;
-import com.dano.kjm.domain.item.entity.Item;
 import com.dano.kjm.domain.item.entity.ItemStatus;
 import com.dano.kjm.domain.item.entity.ItemType;
 import lombok.Data;
 
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class ItemAddDto {
 
-    @NotBlank(message = "잘못된 요청입니다.")
-    private String email;
+    private Long memberId;
 
     @NotBlank(message = "상품 이름을 입력하세요.")
     private String name;
@@ -33,6 +32,6 @@ public class ItemAddDto {
     @Size(min = 10, max = 9999, message = "제대로 입력하세요.")
     private String itemDetail;
 
-    private ItemImgDto itemImgDto;
+    private List<ItemImgDto> itemImgDto = new ArrayList<>();
 
 }

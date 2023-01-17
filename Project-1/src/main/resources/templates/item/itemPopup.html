@@ -32,14 +32,10 @@
                     <div class="col-md-6">
                             <div style="width: 400px;">
                                 <span>카테고리 선택 :&nbsp;&nbsp;&nbsp;
-                                    <input type="radio" id="TOP" name="itemType">
-                                    <label for="TOP"><span></span>모자</label>
-                                    <input type="radio" id="PANTS" name="itemType">
-                                    <label for="PANTS"><span></span>바지</label>
-                                    <input type="radio" id="OUTER" name="itemType">
-                                    <label for="OUTER"><span></span>상의</label>
-                                    <input type="radio" id="ACCESSORY" name="itemType">
-                                    <label for="ACCESSORY"><span></span>악세사리</label>
+                                    <span th:each="type : ${itemTypes}">
+                                        <input type="radio" th:field="*{itemType}" th:value="${type.name()}">
+                                        <label th:for="${#ids.prev('itemType')}" th:text="${type.description}">TOP</label>
+                                    </span>
                                 </span>
                                 <label for="name" class="mb-5">상품 명 :<span>&nbsp;&nbsp;&nbsp;</span>
                                     <input type="text" id="name" th:field="*{name}" style="width:300px; margin-left: 0px;">
@@ -57,7 +53,7 @@
                                     <input type="text" id="itemDetail" class="mb-5 lead" th:field="*{itemDetail}" style="width:300px;height:200px;font-size:15px; margin-left: 0px;">
                                     <p th:erros="*{itemDetail}" class="fieldError"></p>
                                 </label>
-                                <input type="hidden" id="email" name="email" th:value="${#authentication.getName()}">
+                                <input type="hidden" id="memberId" th:field="*{memberId}">
                             </div>
                             <input type="submit" class="btn btn-primary btn-lg btn-block" th:value="등록">
                             <input type="button" class="btn btn-primary btn-lg btn-block" th:value="취소" onclick="window.close();">

@@ -8,16 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class ItemImgService {
 
     @Value("${custom.itemImgLocation}")
@@ -27,6 +24,7 @@ public class ItemImgService {
 
     private final FileService fileService;
 
+    @Transactional
     public void saveImg(ItemImg itemImg, MultipartFile itemImgFile) throws Exception {
         String oriImgName = itemImgFile.getOriginalFilename();
         String imgName = "";
@@ -40,6 +38,7 @@ public class ItemImgService {
         itemImgRepository.save(itemImg);
     }
 
+    @Transactional
     public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) throws Exception {
         if (!itemImgFile.isEmpty()) {
             ItemImg saveItemImg = itemImgRepository.findById(itemImgId).orElseThrow(EntityNotFoundException::new);
