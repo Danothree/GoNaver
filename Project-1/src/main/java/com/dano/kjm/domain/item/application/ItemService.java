@@ -1,7 +1,5 @@
 package com.dano.kjm.domain.item.application;
 
-import com.dano.kjm.domain.item.dao.CategoryItemRepository;
-import com.dano.kjm.domain.item.dao.CategoryRepository;
 import com.dano.kjm.domain.item.dao.ItemImgRepository;
 import com.dano.kjm.domain.item.dao.ItemRepository;
 import com.dano.kjm.domain.item.dto.request.ItemAddDto;
