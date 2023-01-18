@@ -1,12 +1,8 @@
 package com.dano.kjm.domain.seller.dto;
 
-import com.dano.kjm.domain.item.dto.request.ItemImgDto;
-import com.dano.kjm.domain.item.entity.Item;
 import com.dano.kjm.domain.item.entity.ItemStatus;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class SellFormDto {
@@ -23,17 +19,16 @@ public class SellFormDto {
 
     private ItemStatus itemStatus;
 
-    private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
+    private String imgUrl;
 
-    private List<Long> itemImgIds = new ArrayList<>();
-
-    public SellFormDto createForm(Item item) {
-        this.id = item.getId();
-        this.name = item.getName();
-        this.price = item.getPrice();
-        this.itemDetail = item.getItemDetail();
-        this.stockQuantity = item.getStockQuantity();
-        this.itemStatus = item.getItemStatus();
-        return this;
+    @QueryProjection
+    public SellFormDto(Long id, String name, Integer price, String itemDetail, Integer stockQuantity, ItemStatus itemStatus, String imgUrl) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.itemDetail = itemDetail;
+        this.stockQuantity = stockQuantity;
+        this.itemStatus = itemStatus;
+        this.imgUrl = imgUrl;
     }
 }

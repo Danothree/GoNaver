@@ -6,6 +6,8 @@ import com.dano.kjm.domain.item.dto.response.PublicItemDto;
 import com.dano.kjm.domain.item.entity.ItemStatus;
 import com.dano.kjm.domain.item.entity.QItem;
 import com.dano.kjm.domain.item.entity.QItemImg;
+import com.dano.kjm.domain.seller.dto.QSellFormDto;
+import com.dano.kjm.domain.seller.dto.SellFormDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -63,14 +65,37 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     @Override
-    public Page<PublicItemDto> getPublicItemPage(ItemSearchResponse itemSearch, Pageable pageable) {
+    public Page<SellFormDto> getPublicItemPage(Pageable pageable) {
 
         QItem item = QItem.item;
         QItemImg itemImg = QItemImg.itemImg;
 
-//        queryFactory
-//                .select(new QItem)
-        return null;
+        List<SellFormDto> sellFormDtos = queryFactory
+                .select(
+                        new QSellFormDto(
+                                item.id,
+                                item.name,
+                                item.price,
+                                item.itemDetail,
+                                item.stockQuantity,
+                                item.itemStatus,
+                                itemImg.imgUrl
+                        )
+
+                )
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.imgYn.eq("Y"))
+                .orderBy(item.stockQuantity.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory.select(Wildcard.count).from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.imgYn.eq("Y"))
+                .fetchOne();
+        return new PageImpl<>(sellFormDtos, pageable, total);
     }
 }
 

@@ -38,5 +38,18 @@ class Seller {
         }
         return true;
     }
+
+    static formDataTrans(){
+        let check = this.imageCheck();
+
+        if(check) {
+            document.getElementById('sellForm').submit();
+
+            setTimeout(() => {
+                opener.location.reload();
+                self.close();
+            },100);
+        }
+    }
 }
 

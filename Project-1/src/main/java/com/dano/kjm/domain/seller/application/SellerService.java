@@ -35,8 +35,7 @@ public class SellerService {
     private final SellerRepository sellerRepository;
     private final ApplicationEventPublisher publisher;
     private final MemberRepository memberRepository;
-    private final ItemImgRepository itemImgRepository;
-    private final SellerItemRepository sellerItemRepository;
+    private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
     public Seller findByEmail(String email) {
@@ -64,25 +63,8 @@ public class SellerService {
         sellerRepository.deleteById(member.getId());
     }
 
-    public Page<SellFormDto> getItems(Long sellerId, Pageable pageable) {
-        Page<SellerItem> sellerItems = sellerItemRepository.findBySellerId(sellerId, pageable);
-        List<Item> items = new ArrayList<>();
-        List<SellFormDto> sellFormDtos = new ArrayList<>();
-        for (SellerItem sellerItem : sellerItems) {
-            items.add(sellerItem.getItem());
-        }
-        for (Item item : items) {
-            SellFormDto sellFormDto = new SellFormDto().createForm(item);
-            List<ItemImg> itemImgs = itemImgRepository.findByItemIdOrderByIdAsc(item.getId());
-            List<ItemImgDto> itemImgDtos = new ArrayList<>();
-            for (ItemImg itemImg : itemImgs) {
-                ItemImgDto imgDto = new ItemImgDto().createImgDto(itemImg);
-                itemImgDtos.add(imgDto);
-                sellFormDto.setItemImgDtoList(itemImgDtos);
-            }
-            sellFormDtos.add(sellFormDto);
-        }
-
-        return new PageImpl<>(sellFormDtos);
+    public Page<SellFormDto> getItems(Pageable pageable) {
+        return itemRepository.getPublicItemPage(pageable);
     }
+
 }

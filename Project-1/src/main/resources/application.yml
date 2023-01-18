@@ -6,7 +6,7 @@ server:
   port: 8088
 
 custom:
-  itemImgLocation: src/main/resources/static/
+  itemImgLocation: src/main/resources/static/images/item
 #spring security
 
 spring:

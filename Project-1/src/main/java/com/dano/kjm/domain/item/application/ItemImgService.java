@@ -39,7 +39,7 @@ public class ItemImgService {
     }
 
     @Transactional
-    public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) throws Exception {
+    public void updateImg(Long itemImgId, MultipartFile itemImgFile) throws Exception {
         if (!itemImgFile.isEmpty()) {
             ItemImg saveItemImg = itemImgRepository.findById(itemImgId).orElseThrow(EntityNotFoundException::new);
 

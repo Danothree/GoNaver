@@ -6,6 +6,7 @@ import com.dano.kjm.domain.item.entity.ItemType;
 import com.dano.kjm.global.config.security.SecurityMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

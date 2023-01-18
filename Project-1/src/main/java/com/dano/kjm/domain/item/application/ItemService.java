@@ -1,5 +1,7 @@
 package com.dano.kjm.domain.item.application;
 
+import com.dano.kjm.domain.item.dao.CategoryItemRepository;
+import com.dano.kjm.domain.item.dao.CategoryRepository;
 import com.dano.kjm.domain.item.dao.ItemImgRepository;
 import com.dano.kjm.domain.item.dao.ItemRepository;
 import com.dano.kjm.domain.item.dto.request.ItemAddDto;
@@ -33,7 +35,6 @@ public class ItemService {
         categoryItemRepository.save(categoryItem);
         itemRepository.save(item);
         sellerItemService.save(itemAddDto.getMemberId(), item);
-//        for (int i = 0; i < itemImgFile.getSize(); i++) {
         for (int i = 0; i < 1; i++) {
             ItemImg itemImg = new ItemImg();
             itemImg.itemCreate(item);

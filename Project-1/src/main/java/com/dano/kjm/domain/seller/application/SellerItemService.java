@@ -10,6 +10,7 @@ import com.dano.kjm.domain.seller.entity.SellerItem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -20,6 +21,7 @@ public class SellerItemService {
     private final MemberRepository memberRepository;
     private final SellerRepository sellerRepository;
 
+    @Transactional
     public void save(Long memberId, Item item) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         Seller seller = sellerRepository.findByMember(member);
