@@ -45,10 +45,11 @@
                                                         <h6 class="mb-0" th:text="|${item.price}원|"></h6>
                                                     </div>
                                                     <div class="col-md-2 col-lg-2 col-xl-2 offset-lg-1">
-                                                        <h6 class="mb-0" th:text="|${item.stockQuantity}개 남음|"></h6>
+                                                        <h6 class="mb-0" th:text="${item.stockQuantity > 0} ? ${item.stockQuantity}+'개 남음' : '재고없음'"></h6>
                                                     </div>
                                                     <div class="col-md-2 col-xl-2 text-end">
-                                                        <i class="fas fa-times" th:text="${item.itemStatus == T(com.dano.kjm.domain.item.entity.ItemStatus).SALE} ? '판매중' : '품절'"></i>
+<!--                                                        <i class="fas fa-times" th:text="${item.itemStatus == T(com.dano.kjm.domain.item.entity.ItemStatus).SALE} ? '판매중' : '품절'"></i>-->
+                                                        <i class="fas fa-times" th:text="${item.stockQuantity > 0} ? '판매중' : '품절'"></i>
                                                     </div>
                                                 </div>
                                             </div>
