@@ -18,21 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-    private final ItemImgRepository itemImgRepository;
     private final ItemImgService itemImgService;
     private final SellerItemService sellerItemService;
-    private final CategoryRepository categoryRepository;
-    private final CategoryItemRepository categoryItemRepository;
+    private final CategoryService categoryService;
 
     @Transactional
     public void saveItem(ItemAddDto itemAddDto, MultipartFile itemImgFile) throws Exception {
         Item item = Item.createItem(itemAddDto);
-        Category category = new Category().createCategory(ItemType.valueOf(itemAddDto.getItemType()));
-        CategoryItem categoryItem = new CategoryItem();
-        categoryItem.setCategory(category);
-        categoryItem.setItem(item);
-        categoryRepository.save(category);
-        categoryItemRepository.save(categoryItem);
+        categoryService.save(ItemType.valueOf(itemAddDto.getItemType()), item);
         itemRepository.save(item);
         sellerItemService.save(itemAddDto.getMemberId(), item);
         for (int i = 0; i < 1; i++) {
