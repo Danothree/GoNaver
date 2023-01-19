@@ -26,38 +26,28 @@ public class EmailService {
 
     private JavaMailSender mailSender ;
     private SimpleMailMessage message;
-    private MimeMessageHelper messageHelper;
 
     public EmailService(JavaMailSender mailSender) throws MessagingException {
         this.mailSender = mailSender;
-//        message = this.mailSender.createMimeMessage();
         message = new SimpleMailMessage();
-//        messageHelper = new MimeMessageHelper(message, true, "UTF-8");
     }
 
     public void setSubject(String subject) throws MessagingException {
-//        messageHelper.setSubject(subject);
         message.setSubject(subject);
     }
 
     public void setText(String text) throws MessagingException {
-//        messageHelper.setText(text, true);
         message.setText(text);
     }
 
     public void From(String fromEmail) throws UnsupportedEncodingException, MessagingException {
-//        messageHelper.setFrom(email, name);
         message.setFrom(fromEmail);
     }
 
     public void setTo(String toEmail) throws MessagingException {
-//        messageHelper.setTo(email);
         message.setTo(toEmail);
     }
 
-    public void addInline(String contentId, DataSource datsSource) throws MessagingException {
-        messageHelper.addInline(contentId, datsSource);
-    }
 
     public void send(){
         mailSender.send(message);
