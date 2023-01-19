@@ -1,12 +1,16 @@
 package com.dano.kjm.domain.item.entity;
 
 import com.dano.kjm.domain.common.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryItem extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +31,12 @@ public class CategoryItem extends BaseEntity {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public static CategoryItem create(Item item, Category category) {
+        CategoryItem categoryItem = new CategoryItem();
+        categoryItem.item = item;
+        categoryItem.category =category;
+        return categoryItem;
     }
 }

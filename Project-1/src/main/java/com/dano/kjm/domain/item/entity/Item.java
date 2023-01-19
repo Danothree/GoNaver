@@ -65,12 +65,6 @@ public class Item extends BaseEntity {
         item.itemStatus = ItemStatus.SALE;
         item.stockQuantity = itemAddDto.getStockQuantity();
         item.itemDetail = itemAddDto.getItemDetail();
-//        ItemType itemType = ItemType.valueOf(itemAddDto.getItemType());
-//        Category category = new Category();
-//        CategoryItem categoryItem = new CategoryItem();
-//        categoryItem.setItem(item);
-//        categoryItem.setCategory(category);
-//        item.addCategoryItems(categoryItem);
         return item;
     }
 

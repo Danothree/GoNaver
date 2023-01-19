@@ -24,8 +24,9 @@ public class Category {
         categoryItems.add(categoryItem);
         categoryItem.setCategory(this);
     }
-    public Category createCategory(ItemType itemType) {
-        this.itemType = itemType;
-        return this;
+    public static Category create(ItemType itemType) {
+        Category category = new Category();
+        category.itemType = itemType;
+        return category;
     }
 }

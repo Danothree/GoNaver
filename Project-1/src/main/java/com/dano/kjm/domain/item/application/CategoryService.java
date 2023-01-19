@@ -17,10 +17,8 @@ public class CategoryService {
     private final CategoryItemRepository categoryItemRepository;
 
     public void save(ItemType itemType, Item item) {
-        Category category = new Category().createCategory(itemType);
-        CategoryItem categoryItem = new CategoryItem();
-        categoryItem.setCategory(category);
-        categoryItem.setItem(item);
+        Category category = Category.create(itemType);
+        CategoryItem categoryItem = CategoryItem.create(item, category);
         categoryRepository.save(category);
         categoryItemRepository.save(categoryItem);
     }

@@ -2,7 +2,6 @@ package com.dano.kjm.domain.item.dao;
 
 import com.dano.kjm.domain.item.entity.Item;
 import com.dano.kjm.domain.item.dto.response.ItemSearchResponse;
-import com.dano.kjm.domain.item.dto.response.PublicItemDto;
 import com.dano.kjm.domain.item.entity.ItemStatus;
 import com.dano.kjm.domain.item.entity.QItem;
 import com.dano.kjm.domain.item.entity.QItemImg;
@@ -11,7 +10,6 @@ import com.dano.kjm.domain.seller.dto.SellFormDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
