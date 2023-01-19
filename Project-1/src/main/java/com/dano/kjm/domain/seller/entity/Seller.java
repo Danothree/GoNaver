@@ -4,7 +4,9 @@ import com.dano.kjm.domain.member.entity.Role;
 import com.dano.kjm.domain.member.entity.Authority;
 import com.dano.kjm.domain.member.entity.Member;
 import com.dano.kjm.domain.common.entity.BaseTimeEntity;
+import com.dano.kjm.global.error.exception.SellerNotVerifiedException;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,6 +29,9 @@ public class Seller extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ColumnDefault("0")
+    private boolean allowSale;
+
     public static Seller signUpSeller(Member member) {
         if(member.isSeller()) {
             throw new IllegalArgumentException("이미 판매자인 아이디입니다.");
@@ -40,5 +45,11 @@ public class Seller extends BaseTimeEntity {
 
     private void setMember(Member member) {
         this.member = member;
+    }
+
+    private void verifySellerAuthentication() {
+        if(!allowSale){
+            throw new SellerNotVerifiedException("판매자 인증이 되지 않은 회원입니다.");
+        }
     }
 }

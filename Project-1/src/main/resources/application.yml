@@ -37,6 +37,19 @@ spring:
       filter:
         enabled: true
 
+  # mail
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: subgyuwhan@gmail.com
+    password: hqobjasnqwquipgr
+    encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 #logging
 logging:
@@ -47,6 +60,7 @@ logging:
         type:
           descriptor:
             sql: trace
+
 
 
 
