@@ -1,12 +1,14 @@
 package com.dano.kjm.global.config.security;
 
 import com.dano.kjm.domain.member.entity.Member;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
+@Getter
 public class SecurityMember implements UserDetails {
 
     private final Member member;
@@ -54,5 +56,9 @@ public class SecurityMember implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getEmail() {
+        return member.getEmail();
     }
 }

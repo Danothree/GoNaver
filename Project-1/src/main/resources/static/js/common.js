@@ -47,6 +47,21 @@ class Common {
             });
     }
 
+    confirmSeller(func){
+        const sellerOption = {
+            title: 'Best Ecommerce 판매자 신청',
+            input: 'email',
+            inputLabel: '이메일 인증',
+            inputPlaceholder: 'Enter your email address'
+        }
+        swal.fire(sellerOption)
+            .then(result => {
+                if(result.isConfirmed){
+                    func();
+                }
+            });
+    }
+
     serialize(rawData) {
         let result = {};
 
@@ -65,4 +80,6 @@ class Common {
         }
         return result;
     }
+
+
 }
