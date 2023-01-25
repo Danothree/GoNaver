@@ -69,8 +69,7 @@ public class SellerAuthService {
 
     private void compareEmail(String sendEmail, String userEmail){
         if(!sendEmail.equals(userEmail)){
-            log.error("인증코드가 발송될 이메일 : {}, 등록된 사용자의 이메일 : {} 불일치합니다. ",
-                    sendEmail, userEmail );
+            log.error("로그인한 사용자 이메일과 일치하지 않은 이메일");
             throw new EmailIsNotRegisteredException(sendEmail);
         }
     }
