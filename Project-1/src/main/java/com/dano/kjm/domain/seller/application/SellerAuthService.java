@@ -34,7 +34,7 @@ public class SellerAuthService {
 
     @Transactional
     public void sendEmailCode(String toEmail, String userEmail) {
-        Assert.notNull(toEmail,"the email value must not be null." );
+        Assert.notNull(toEmail,"the email value must not be null.");
         compareEmail(toEmail, userEmail);
         String authCode = createCode();
         sellerCodeRepository.save(SellerCode.email(toEmail)
@@ -55,14 +55,8 @@ public class SellerAuthService {
             this.emailService.From(CodeMail.FROM_EMAIL);
             this.emailService.setTo(toEmail);
             this.emailService.send();
-        }catch (MessagingException e){
-            log.error("이메일 변환 작업 에외");
-            e.getStackTrace();
-        }catch (UnsupportedEncodingException e){
-            log.error("인코딩 예외");
-            e.getStackTrace();
-        }catch (Exception e){
-            log.error("이메일 인증코드 발송 과정에 예외가 발생 했습니다.");
+        }catch (MessagingException | UnsupportedEncodingException e){
+            log.error("Email Error: 이메일 변환 작업중 에외");
             e.getStackTrace();
         }
     }
