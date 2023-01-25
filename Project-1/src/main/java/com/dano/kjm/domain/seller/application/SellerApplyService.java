@@ -3,7 +3,6 @@ package com.dano.kjm.domain.seller.application;
 import com.dano.kjm.domain.seller.dao.SellerCodeRepository;
 import com.dano.kjm.domain.seller.entity.SellerCode;
 import com.dano.kjm.global.error.exception.EmailIsNotRegisteredException;
-import com.dano.kjm.global.util.CodeMail;
 import com.dano.kjm.global.util.TempCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SellerAuthService {
+public class SellerApplyService {
 
     private final EmailService emailService;
     private final SellerCodeRepository sellerCodeRepository;
