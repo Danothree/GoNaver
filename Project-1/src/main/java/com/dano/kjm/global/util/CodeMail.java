@@ -17,11 +17,11 @@ public class CodeMail {
 
     public static String text(String emailKey){
         return new StringBuilder()
-                .append("<h1>Best Ecommerce 인증 메일</h1>")
-                .append("<br>이메일 인증 코드는 <b>")
+                .append("Best Ecommerce 인증 메일 ")
+                .append("이메일 인증 코드는 ")
                 .append(emailKey)
-                .append("</b> 입니다")
-                .append("<br> 감사합니다.")
+                .append(" 입니다. ")
+                .append("감사합니다.")
                 .toString();
     }
 }

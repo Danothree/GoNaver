@@ -1,10 +1,12 @@
 package com.dano.kjm.domain.seller.application;
 
+import com.dano.kjm.global.util.CodeMail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.activation.DataSource;
@@ -24,33 +26,36 @@ import java.io.UnsupportedEncodingException;
 @RequiredArgsConstructor
 public class EmailService {
 
-    private JavaMailSender mailSender ;
-    private SimpleMailMessage message;
+    private final JavaMailSender mailSender ;
+    private SimpleMailMessage message = new SimpleMailMessage();;
 
-    public EmailService(JavaMailSender mailSender) throws MessagingException {
-        this.mailSender = mailSender;
-        message = new SimpleMailMessage();
-    }
-
-    public void setSubject(String subject) throws MessagingException {
+    private void setSubject(String subject) throws MessagingException {
         message.setSubject(subject);
     }
 
-    public void setText(String text) throws MessagingException {
+    private void setText(String text) throws MessagingException {
         message.setText(text);
     }
 
-    public void From(String fromEmail) throws UnsupportedEncodingException, MessagingException {
+    private void From(String fromEmail) throws UnsupportedEncodingException, MessagingException {
         message.setFrom(fromEmail);
     }
 
-    public void setTo(String toEmail) throws MessagingException {
+    private void setTo(String toEmail) throws MessagingException {
         message.setTo(toEmail);
     }
 
-
-    public void send(){
+    private void send(){
         mailSender.send(message);
+    }
+
+    @Async
+    public void sendCode(String email, String code) throws MessagingException, UnsupportedEncodingException {
+        setSubject(CodeMail.SUBJECT);
+        setText(CodeMail.text(code));
+        From(CodeMail.FROM_EMAIL);
+        setTo(email);
+        send();
     }
 
 }

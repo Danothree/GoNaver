@@ -7,7 +7,6 @@ import com.dano.kjm.global.util.CodeMail;
 import com.dano.kjm.global.util.TempCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -27,8 +26,7 @@ import java.io.UnsupportedEncodingException;
 @RequiredArgsConstructor
 public class SellerAuthService {
 
-    private EmailService emailService;
-    private final JavaMailSender mailSender;
+    private final EmailService emailService;
     private final SellerCodeRepository sellerCodeRepository;
     private final int KEY_SIZE = 6;
 
@@ -36,27 +34,22 @@ public class SellerAuthService {
     public void sendEmailCode(String toEmail, String userEmail) {
         Assert.notNull(toEmail,"the email value must not be null.");
         compareEmail(toEmail, userEmail);
+
         String authCode = createCode();
-        sellerCodeRepository.save(SellerCode.email(toEmail)
-                .code(authCode));
+
         sendEmail(toEmail, authCode);
+        saveEmailAndCode(toEmail, authCode);
     }
 
     private String createCode() {
-        String authCode = TempCode.createCode(KEY_SIZE);
-        return authCode;
+        return TempCode.createCode(KEY_SIZE);
     }
 
-    private void sendEmail(String toEmail, String authCode) {
+    private void sendEmail(String email, String authCode) {
         try{
-            emailService = new EmailService(mailSender);
-            this.emailService.setSubject(CodeMail.SUBJECT);
-            this.emailService.setText(CodeMail.text(authCode));
-            this.emailService.From(CodeMail.FROM_EMAIL);
-            this.emailService.setTo(toEmail);
-            this.emailService.send();
+            emailService.sendCode(email, authCode);
         }catch (MessagingException | UnsupportedEncodingException e){
-            log.error("Email Error: 이메일 변환 작업중 에외");
+            log.error("Email Error: 이메일 코드 전송 중 에외발생");
             e.getStackTrace();
         }
     }
@@ -67,4 +60,10 @@ public class SellerAuthService {
             throw new EmailIsNotRegisteredException(sendEmail);
         }
     }
+
+    private void saveEmailAndCode(String toEmail, String authCode){
+        sellerCodeRepository.save(SellerCode.email(toEmail)
+                .code(authCode));
+    }
+
 }
