@@ -10,9 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
-
 /**
  * SellerAuthController.java
  * Class 설명을 작성하세요.
@@ -31,7 +28,7 @@ public class SellerApplyService {
 
     @Transactional
     public void sendEmailCode(String toEmail, String userEmail) {
-        Assert.notNull(toEmail,"the email value must not be null.");
+        Assert.notNull(toEmail, "the email value must not be null.");
         compareEmail(toEmail, userEmail);
 
         String authCode = createCode();
@@ -45,22 +42,17 @@ public class SellerApplyService {
     }
 
     private void sendEmail(String email, String authCode) {
-        try{
-            emailService.sendCode(email, authCode);
-        }catch (MessagingException | UnsupportedEncodingException e){
-            log.error("Email Error: 이메일 코드 전송 중 에외발생");
-            e.getStackTrace();
-        }
+        emailService.sendCode(email, authCode);
     }
 
-    private void compareEmail(String sendEmail, String userEmail){
-        if(!sendEmail.equals(userEmail)){
+    private void compareEmail(String sendEmail, String userEmail) {
+        if (!sendEmail.equals(userEmail)) {
             log.error("로그인한 사용자 이메일과 일치하지 않은 이메일");
             throw new EmailIsNotRegisteredException(sendEmail);
         }
     }
 
-    private void saveEmailAndCode(String toEmail, String authCode){
+    private void saveEmailAndCode(String toEmail, String authCode) {
         sellerCodeRepository.save(SellerCode.email(toEmail)
                 .code(authCode));
     }

@@ -5,14 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import javax.activation.DataSource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
 
 /**
  * MailSendService.java
@@ -29,19 +23,19 @@ public class EmailService {
     private final JavaMailSender mailSender ;
     private SimpleMailMessage message = new SimpleMailMessage();;
 
-    private void setSubject(String subject) throws MessagingException {
+    private void setSubject(String subject){
         message.setSubject(subject);
     }
 
-    private void setText(String text) throws MessagingException {
+    private void setText(String text) {
         message.setText(text);
     }
 
-    private void From(String fromEmail) throws UnsupportedEncodingException, MessagingException {
+    private void From(String fromEmail){
         message.setFrom(fromEmail);
     }
 
-    private void setTo(String toEmail) throws MessagingException {
+    private void setTo(String toEmail)  {
         message.setTo(toEmail);
     }
 
@@ -50,7 +44,7 @@ public class EmailService {
     }
 
     @Async
-    public void sendCode(String email, String code) throws MessagingException, UnsupportedEncodingException {
+    public void sendCode(String email, String code)  {
         setSubject(CodeMail.SUBJECT);
         setText(CodeMail.text(code));
         From(CodeMail.FROM_EMAIL);
