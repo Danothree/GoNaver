@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Access(AccessType.FIELD)
 @Embeddable
 @Getter
 @NoArgsConstructor
-public class Address {
+public class Address implements Serializable {
 
     private String address;
     private String postalCode;

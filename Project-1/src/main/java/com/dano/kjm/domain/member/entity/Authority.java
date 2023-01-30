@@ -3,10 +3,11 @@ package com.dano.kjm.domain.member.entity;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
-public class Authority {
+public class Authority implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "authority_id")
