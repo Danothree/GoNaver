@@ -62,3 +62,26 @@
   - 취소
 - 관리자
   - 
+
+
+---
+## Redis Docker 실행
+```
+docker pull redis
+docker run -d -p 6379:6379  --hostname redis --name radis redis
+```
+
+참조 : [Docker Redis 공식문서](https://hub.docker.com/_/redis/)
+
+### * yaml 구성 추가
+```yaml
+spring:
+  session:
+    store-type: redis
+    redis:
+      namespace: spring:session #default
+  redis:
+    host: localhost
+    port: 6379
+
+```

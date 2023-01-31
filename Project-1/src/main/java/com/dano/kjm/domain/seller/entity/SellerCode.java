@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 /**
  * SellerCode.java
@@ -32,10 +33,16 @@ public class SellerCode extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean authSuccess;
 
+    private LocalDateTime startAuth;
+
+    @Column(nullable = false)
+    private boolean confirm = false;
+
     private SellerCode(Builder builder){
         this.email = builder.email;
         this.authCode = builder.authCode;
         this.authSuccess = false;
+        this.startAuth = LocalDateTime.now();
     }
 
     public static Builder email(@NotBlank String email){
