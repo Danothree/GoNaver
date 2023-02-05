@@ -1,6 +1,7 @@
 package com.dano.kjm.domain.seller.application;
 
 import com.dano.kjm.global.util.CodeMail;
+import com.dano.kjm.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,6 +21,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmailService {
 
+    private final Long VALID_TIME = 1000 * 60 * 5L;
+
+    private final RedisUtil redisUtil;
     private final JavaMailSender mailSender ;
     private SimpleMailMessage message = new SimpleMailMessage();;
 
@@ -45,6 +49,7 @@ public class EmailService {
 
     @Async
     public void sendCode(String email, String code)  {
+        redisUtil.setDataExpire(code, email, VALID_TIME);
         setSubject(CodeMail.SUBJECT);
         setText(CodeMail.text(code));
         From(CodeMail.FROM_EMAIL);

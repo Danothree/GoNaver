@@ -32,7 +32,7 @@ class CustomFetch {
                 'Content-Type' : 'application/json',
                 ...headers,
             },
-            body : body,
+            body : JSON.stringify(body),
 
         };
         const res = await fetch(url, options);
