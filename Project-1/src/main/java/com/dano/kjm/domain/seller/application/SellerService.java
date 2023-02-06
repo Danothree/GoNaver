@@ -26,6 +26,7 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -64,7 +65,13 @@ public class SellerService {
     }
 
     public Page<SellFormDto> getItems(Pageable pageable) {
-        return itemRepository.getPublicItemPage(pageable);
+        Page<SellFormDto> publicItemPage = itemRepository.getPublicItemPage(pageable);
+        String property = System.getProperty("user.home");
+        publicItemPage.get().map(sellFormDto -> {
+            sellFormDto.setImgUrl(property+sellFormDto.getImgUrl());
+            return sellFormDto;
+        }).collect(Collectors.toList());
+        return publicItemPage;
     }
 
 }
