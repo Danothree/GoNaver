@@ -68,7 +68,7 @@
 ## Redis Docker 실행
 ```
 docker pull redis
-docker run -d -p 6379:6379  --hostname redis --name radis redis
+docker run -p 6379:6379 --name redis -d redis:latest --requirepass "1234"
 ```
 
 참조 : [Docker Redis 공식문서](https://hub.docker.com/_/redis/)
