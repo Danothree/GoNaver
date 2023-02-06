@@ -1,14 +1,12 @@
 package com.dano.kjm.domain.seller.api;
 
-import com.dano.kjm.domain.seller.application.SellerAuthService;
+import com.dano.kjm.domain.seller.application.SellerApplyService;
+import com.dano.kjm.domain.seller.dto.EmailInfo;
 import com.dano.kjm.global.config.security.SecurityMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 
@@ -24,13 +22,12 @@ import javax.mail.MessagingException;
 @RequiredArgsConstructor
 public class ApplyController {
 
-    private final SellerAuthService sellerAuthService;
+    private final SellerApplyService sellerApplyService;
 
-    @GetMapping("/{email}")
-    public ResponseEntity sendEmailCode(@PathVariable("email") String email,
-                                        @AuthenticationPrincipal SecurityMember member) throws MessagingException {
-        sellerAuthService.sendEmailCode(email, member.getEmail());
-        System.out.println("success " + email);
+    @PostMapping()
+    public ResponseEntity sendEmailCode(@RequestBody EmailInfo email,
+                                        @AuthenticationPrincipal SecurityMember member)  {
+        sellerApplyService.sendEmailCode(email.getEmail(), member.getEmail());
         return ResponseEntity.ok().build();
     }
 }
