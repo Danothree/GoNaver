@@ -65,13 +65,7 @@ public class SellerService {
     }
 
     public Page<SellFormDto> getItems(Pageable pageable) {
-        Page<SellFormDto> publicItemPage = itemRepository.getPublicItemPage(pageable);
-        String property = System.getProperty("user.home");
-        publicItemPage.get().map(sellFormDto -> {
-            sellFormDto.setImgUrl(property+sellFormDto.getImgUrl());
-            return sellFormDto;
-        }).collect(Collectors.toList());
-        return publicItemPage;
+        return itemRepository.getPublicItemPage(pageable);
     }
 
 }

@@ -11,6 +11,7 @@ import com.dano.kjm.domain.seller.entity.Seller;
 import com.dano.kjm.domain.seller.entity.SellerItem;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +58,11 @@ public class SellerController {
         model.addAttribute("seller", seller);
         model.addAttribute("maxPage", 5);
         return "seller/seller";
+    }
+
+    @GetMapping("/items/outer")
+    public String allItems() {
+        return "seller/outer";
     }
 
 }
