@@ -1,6 +1,6 @@
 package com.dano.kjm.global.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.dano.kjm.global.prop.RedisProp;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,12 +17,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
-    private String host;
-
-    @Value("${spring.redis.port}")
-    private int port;
-
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         GenericJackson2JsonRedisSerializer genericSerializer = new GenericJackson2JsonRedisSerializer();
@@ -35,10 +29,10 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
+    public RedisConnectionFactory redisConnectionFactory(RedisProp redisProp) {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(host);
-        redisStandaloneConfiguration.setPort(port);
+        redisStandaloneConfiguration.setHostName(redisProp.getHost());
+        redisStandaloneConfiguration.setPort(redisProp.getPort());
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 

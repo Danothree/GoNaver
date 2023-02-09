@@ -67,7 +67,11 @@
 ---
 ## Redis Docker 실행
 ```
-docker pull redis
+cd Project-1/docker/redis
+docker-compose up -d
+
+or 
+
 docker run -p 6379:6379 --name redis -d redis:latest --requirepass "1234"
 ```
 
