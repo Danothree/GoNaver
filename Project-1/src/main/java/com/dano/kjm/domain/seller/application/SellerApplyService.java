@@ -34,7 +34,7 @@ public class SellerApplyService {
         String authCode = createCode();
 
         sendEmail(toEmail, authCode);
-        saveEmailAndCode(toEmail, authCode);
+//        saveEmailAndCode(toEmail, authCode);
     }
 
     private String createCode() {

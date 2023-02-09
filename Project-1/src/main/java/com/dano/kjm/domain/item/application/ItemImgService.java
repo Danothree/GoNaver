@@ -31,8 +31,10 @@ public class ItemImgService {
         String imgUrl = "";
 
         if (!CustomUtil.isEmpty(oriImgName)) {
+            String property = System.getProperty("user.home");
+
             imgName = fileService.uploadImg(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            imgUrl = "/images/item/" + imgName;
+            imgUrl = property+itemImgLocation + "/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
         itemImgRepository.save(itemImg);

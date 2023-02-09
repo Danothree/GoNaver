@@ -1,6 +1,7 @@
 package com.dano.kjm.domain.seller.api;
 
 import com.dano.kjm.domain.seller.application.SellerApplyService;
+import com.dano.kjm.domain.seller.dto.EmailInfo;
 import com.dano.kjm.global.config.security.SecurityMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,10 @@ public class ApplyController {
 
     private final SellerApplyService sellerApplyService;
 
-    @PostMapping("/{email}")
-    public ResponseEntity sendEmailCode(@PathVariable("email") String email,
+    @PostMapping()
+    public ResponseEntity sendEmailCode(@RequestBody EmailInfo email,
                                         @AuthenticationPrincipal SecurityMember member)  {
-        sellerApplyService.sendEmailCode(email, member.getEmail());
+        sellerApplyService.sendEmailCode(email.getEmail(), member.getEmail());
         return ResponseEntity.ok().build();
     }
 }

@@ -65,7 +65,7 @@ public class SecurityConfig {
 
         http.authorizeRequests()
                 .mvcMatchers("/", "/members/login","/members/login/error",
-                        "/members/sign-up", "/items").permitAll()
+                        "/members/sign-up", "/items","/seller/items/**").permitAll()
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated();
         return http.build();
