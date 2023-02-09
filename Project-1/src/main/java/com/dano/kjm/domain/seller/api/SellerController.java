@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -48,7 +49,7 @@ public class SellerController {
     }
 
     @GetMapping(value = {"/{email}","/{email}/{page}"})
-    public String main(@PathVariable String email, Model model, @PathVariable Optional<Integer> page) {
+    public String main(@PathVariable String email, Model model, @PathVariable Optional<Integer> page, HttpServletRequest request) {
         MemberDetail member = memberService.findMember(email);
         Seller seller = sellerService.findByEmail(member.getEmail());
         PageRequest pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
@@ -57,6 +58,7 @@ public class SellerController {
         model.addAttribute("items", items);
         model.addAttribute("seller", seller);
         model.addAttribute("maxPage", 5);
+        model.addAttribute("url", request.getRequestURL());
         return "seller/seller";
     }
 
