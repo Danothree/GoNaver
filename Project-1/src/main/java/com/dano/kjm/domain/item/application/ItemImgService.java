@@ -34,7 +34,7 @@ public class ItemImgService {
             String property = System.getProperty("user.home");
 
             imgName = fileService.uploadImg(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            imgUrl = property+itemImgLocation + "/" + imgName;
+            imgUrl = itemImgLocation + "/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
         itemImgRepository.save(itemImg);
