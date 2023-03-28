@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         String property = System.getProperty("user.home");
-        registry.addResourceHandler("/seller/items/outer/**","/seller/*/*/*","/seller/*/*/*/*")
+        registry.addResourceHandler("/seller/items/outer/**","/seller/sim@danu.com/**")
                 .addResourceLocations("file:///"+property+"/");
     }
 }
