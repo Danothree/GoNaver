@@ -21,7 +21,8 @@ class CustomFetch {
     }
 
     //POST
-    async post(body, headers = {}) {
+    async post(body, headers = {}, alert) {
+        console.log("body: " + body)
         let url = this.host;
         if(this.path !== '') {
             url = `${this.host}/${this.path}`;
@@ -37,7 +38,9 @@ class CustomFetch {
         };
         const res = await fetch(url, options);
         if(res.ok) {
-            new Common().showAlert("완료!");
+            if (alert === true) {
+                new Common().showAlert("완료!");
+            }
             return await res.json();
         } else {
             new Common().showAlert('통신 장애','error');

@@ -5,7 +5,9 @@ import com.dano.kjm.domain.seller.dto.EmailInfo;
 import com.dano.kjm.global.config.security.SecurityMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -24,10 +26,17 @@ public class ApplyController {
 
     private final SellerApplyService sellerApplyService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity sendEmailCode(@RequestBody EmailInfo email,
                                         @AuthenticationPrincipal SecurityMember member)  {
         sellerApplyService.sendEmailCode(email.getEmail(), member.getEmail());
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/certify")
+    public String certifyCode(String emailCode) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return sellerApplyService.codeCheck(emailCode, email);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +37,8 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
             request.setAttribute("LoginFailMessage", "비밀번호가 만료된 계정입니다.");
         }
         else request.setAttribute("LoginFailMessage", "계정을 찾을 수 없습니다.");
-        response.sendRedirect("/members/login/error");
-//        request.getRequestDispatcher("/").forward(request, response);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/members/login/error");
+        dispatcher.forward(request, response);
     }
 }

@@ -34,7 +34,7 @@ public class SellerApplyService {
         String authCode = createCode();
 
         sendEmail(toEmail, authCode);
-//        saveEmailAndCode(toEmail, authCode);
+        saveEmailAndCode(toEmail, authCode);
     }
 
     private String createCode() {
@@ -53,8 +53,23 @@ public class SellerApplyService {
     }
 
     private void saveEmailAndCode(String toEmail, String authCode) {
-        sellerCodeRepository.save(SellerCode.email(toEmail)
-                .code(authCode));
+        SellerCode sellerCode = sellerCodeRepository.findAllByEmail(toEmail).orElse(null);
+        if (sellerCode != null) {
+            sellerCode.changeAuthCode(authCode);
+        } else {
+            sellerCodeRepository.save(SellerCode.email(toEmail)
+                    .code(authCode));
+        }
+    }
+
+    public String codeCheck(String emailCode, String email) {
+        SellerCode sellerCode = sellerCodeRepository.findAllByEmail(email).orElse(null);
+        if (sellerCode != null && emailCode.equals(sellerCode.getAuthCode())) {
+            sellerCode.certified();
+            return sellerCode.getAuthCode();
+        } else {
+            return "failed";
+        }
     }
 
 }

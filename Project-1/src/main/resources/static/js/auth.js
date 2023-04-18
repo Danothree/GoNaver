@@ -23,9 +23,25 @@ class Auth {
             "email" : email
         }
 
-        const fetch = new CustomFetch("/seller", 'apply');
-        fetch.post(emailInfo, {}).then(result => alert(result));
-        this.showInputEmailCode();
+        const fetch = new CustomFetch("/seller", 'apply', false);
+        fetch.post(emailInfo).then(this.showInputEmailCode());
+
+
+    }
+
+    static userCertified(emailCode) {
+
+        const fetch = new CustomFetch("/seller", 'apply/certify',false);
+        fetch.post({
+            "emailCode" : emailCode
+        }).then(value => {
+            if (value === emailCode) {
+                Common().showAlert("인증 완료")
+            } else {
+                Common().showAlert("인증 실패",'danger');
+            }
+        })
+
 
     }
 
@@ -39,7 +55,7 @@ class Auth {
         swal.fire(inputEmailCode)
             .then(result => {
                 if(result.isConfirmed) {
-                    alert("하하하하")
+                    this.userCertified(result);
                 }
             })
     }

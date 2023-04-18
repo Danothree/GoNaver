@@ -38,6 +38,15 @@ public class SellerCode extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean confirm = false;
 
+    public void certified() {
+        this.authSuccess = true;
+        this.confirm = true;
+    }
+
+    public void changeAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
+
     private SellerCode(Builder builder){
         this.email = builder.email;
         this.authCode = builder.authCode;
