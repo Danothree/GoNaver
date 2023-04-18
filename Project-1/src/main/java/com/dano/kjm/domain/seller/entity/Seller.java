@@ -9,12 +9,13 @@ import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-public class Seller extends BaseTimeEntity {
+public class Seller extends BaseTimeEntity implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seller_id")

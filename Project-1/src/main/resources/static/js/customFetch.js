@@ -14,7 +14,7 @@ class CustomFetch {
         const res = await fetch(url);
         if(res.ok) {
             new Common().showAlert("완료!");
-            return res.json();
+            return await res.json();
         } else {
             new Common().showAlert("통신 실패.",'error');
         }
@@ -38,7 +38,7 @@ class CustomFetch {
         const res = await fetch(url, options);
         if(res.ok) {
             new Common().showAlert("완료!");
-            return res.json();
+            return await res.json();
         } else {
             new Common().showAlert('통신 장애','error');
         }

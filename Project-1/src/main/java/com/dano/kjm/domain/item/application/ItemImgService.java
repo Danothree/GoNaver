@@ -31,8 +31,10 @@ public class ItemImgService {
         String imgUrl = "";
 
         if (!CustomUtil.isEmpty(oriImgName)) {
+            String property = System.getProperty("user.home");
+
             imgName = fileService.uploadImg(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            imgUrl = "/images/item/" + imgName;
+            imgUrl = itemImgLocation + "/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
         itemImgRepository.save(itemImg);
@@ -49,7 +51,7 @@ public class ItemImgService {
 
             String oriImgName = itemImgFile.getOriginalFilename();
             String imgName = fileService.uploadImg(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            String imgUrl = "/images/item/" + imgName;
+            String imgUrl = itemImgLocation + "/" + imgName;
             saveItemImg.updateItemImg(oriImgName, imgName, imgUrl);
         }
     }
