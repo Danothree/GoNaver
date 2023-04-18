@@ -34,9 +34,9 @@ public class ApplyController {
     }
 
     @PostMapping("/certify")
-    public String certifyCode(String emailCode) {
+    public String certifyCode(@RequestBody EmailInfo emailInfo) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        return sellerApplyService.codeCheck(emailCode, email);
+        return sellerApplyService.codeCheck(emailInfo.getEmailCode(), email);
     }
 }

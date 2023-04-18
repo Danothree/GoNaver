@@ -30,19 +30,17 @@ class Auth {
     }
 
     static userCertified(emailCode) {
-
-        const fetch = new CustomFetch("/seller", 'apply/certify',false);
-        fetch.post({
+        const emailInfo = {
             "emailCode" : emailCode
-        }).then(value => {
+        }
+        const fetch = new CustomFetch("/seller", 'apply/certify',false);
+        fetch.post(emailInfo, '').then(value => {
             if (value === emailCode) {
-                Common().showAlert("인증 완료")
+               new Common().showAlert("인증 완료")
             } else {
-                Common().showAlert("인증 실패",'danger');
+               new Common().showAlert("인증 실패",'error');
             }
         })
-
-
     }
 
     static showInputEmailCode() {
@@ -55,7 +53,7 @@ class Auth {
         swal.fire(inputEmailCode)
             .then(result => {
                 if(result.isConfirmed) {
-                    this.userCertified(result);
+                    this.userCertified(result.value);
                 }
             })
     }

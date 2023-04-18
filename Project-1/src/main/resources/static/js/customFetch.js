@@ -22,7 +22,7 @@ class CustomFetch {
 
     //POST
     async post(body, headers = {}, alert) {
-        console.log("body: " + body)
+        console.log("body: " + body);
         let url = this.host;
         if(this.path !== '') {
             url = `${this.host}/${this.path}`;
